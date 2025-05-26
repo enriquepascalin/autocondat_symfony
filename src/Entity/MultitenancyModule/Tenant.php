@@ -3,6 +3,16 @@
 namespace App\Entity\MultitenancyModule;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\AuthenticationModule\Role;
+use App\Entity\NotificationModule\Acknowledgement;
+use App\Entity\NotificationModule\Audience;
+use App\Entity\NotificationModule\Channel;
+use App\Entity\NotificationModule\DeliveryRule;
+use App\Entity\NotificationModule\Notification;
+use App\Entity\ProjectModule\Project;
+use App\Entity\ProjectModule\ProjectPhase;
+use App\Entity\ProjectModule\ProjectPhaseAssignment;
+use App\Entity\StorageManagementModule\Document;
 use App\Entity\WorkflowModule\Calendar;
 use App\Repository\MultitenancyModule\TenantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -65,6 +75,67 @@ class Tenant
     #[ORM\OneToMany(targetEntity: Calendar::class, mappedBy: 'tenant', orphanRemoval: true)]
     private Collection $calendars;
 
+    /**
+     * @var Collection<int, Project>
+     */
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'tenant')]
+    private Collection $projects;
+
+    /**
+     * @var Collection<int, ProjectPhase>
+     */
+    #[ORM\OneToMany(targetEntity: ProjectPhase::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $projectPhases;
+
+    /**
+     * @var Collection<int, ProjectPhaseAssignment>
+     */
+    #[ORM\OneToMany(targetEntity: ProjectPhaseAssignment::class, mappedBy: 'tenant')]
+    private Collection $projectPhaseAssignments;
+
+    /**
+     * @var Collection<int, Document>
+     */
+    #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $documents;
+
+    /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $notifications;
+
+    /**
+     * @var Collection<int, Audience>
+     */
+    #[ORM\OneToMany(targetEntity: Audience::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $audiences;
+
+    /**
+     * @var Collection<int, DeliveryRule>
+     */
+    #[ORM\OneToMany(targetEntity: DeliveryRule::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $deliveryRules;
+
+    /**
+     * @var Collection<int, Channel>
+     */
+    #[ORM\OneToMany(targetEntity: Channel::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $channels;
+
+    /**
+     * @var Collection<int, Acknowledgement>
+     */
+    #[ORM\OneToMany(targetEntity: Acknowledgement::class, mappedBy: 'tenant', orphanRemoval: true)]
+    private Collection $acknowledgements;
+
+    /**
+     * @var Collection<int, Role>
+     */
+    #[ORM\OneToMany(targetEntity: Role::class, mappedBy: 'tenant')]
+    private Collection $roles;
+
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -72,6 +143,16 @@ class Tenant
         $this->segments = new ArrayCollection();
         $this->auditLogs = new ArrayCollection();
         $this->calendars = new ArrayCollection();
+        $this->projects = new ArrayCollection();
+        $this->projectPhases = new ArrayCollection();
+        $this->projectPhaseAssignments = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
+        $this->audiences = new ArrayCollection();
+        $this->deliveryRules = new ArrayCollection();
+        $this->channels = new ArrayCollection();
+        $this->acknowledgements = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -277,6 +358,306 @@ class Tenant
             // set the owning side to null (unless already changed)
             if ($calendar->getTenant() === $this) {
                 $calendar->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): static
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): static
+    {
+        if ($this->projects->removeElement($project)) {
+            // set the owning side to null (unless already changed)
+            if ($project->getTenant() === $this) {
+                $project->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectPhase>
+     */
+    public function getProjectPhases(): Collection
+    {
+        return $this->projectPhases;
+    }
+
+    public function addProjectPhase(ProjectPhase $projectPhase): static
+    {
+        if (!$this->projectPhases->contains($projectPhase)) {
+            $this->projectPhases->add($projectPhase);
+            $projectPhase->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectPhase(ProjectPhase $projectPhase): static
+    {
+        if ($this->projectPhases->removeElement($projectPhase)) {
+            // set the owning side to null (unless already changed)
+            if ($projectPhase->getTenant() === $this) {
+                $projectPhase->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectPhaseAssignment>
+     */
+    public function getProjectPhaseAssignments(): Collection
+    {
+        return $this->projectPhaseAssignments;
+    }
+
+    public function addProjectPhaseAssignment(ProjectPhaseAssignment $projectPhaseAssignment): static
+    {
+        if (!$this->projectPhaseAssignments->contains($projectPhaseAssignment)) {
+            $this->projectPhaseAssignments->add($projectPhaseAssignment);
+            $projectPhaseAssignment->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectPhaseAssignment(ProjectPhaseAssignment $projectPhaseAssignment): static
+    {
+        if ($this->projectPhaseAssignments->removeElement($projectPhaseAssignment)) {
+            // set the owning side to null (unless already changed)
+            if ($projectPhaseAssignment->getTenant() === $this) {
+                $projectPhaseAssignment->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Document>
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): static
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents->add($document);
+            $document->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Document $document): static
+    {
+        if ($this->documents->removeElement($document)) {
+            // set the owning side to null (unless already changed)
+            if ($document->getTenant() === $this) {
+                $document->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getTenant() === $this) {
+                $notification->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Audience>
+     */
+    public function getAudiences(): Collection
+    {
+        return $this->audiences;
+    }
+
+    public function addAudience(Audience $audience): static
+    {
+        if (!$this->audiences->contains($audience)) {
+            $this->audiences->add($audience);
+            $audience->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAudience(Audience $audience): static
+    {
+        if ($this->audiences->removeElement($audience)) {
+            // set the owning side to null (unless already changed)
+            if ($audience->getTenant() === $this) {
+                $audience->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DeliveryRule>
+     */
+    public function getDeliveryRules(): Collection
+    {
+        return $this->deliveryRules;
+    }
+
+    public function addDeliveryRule(DeliveryRule $deliveryRule): static
+    {
+        if (!$this->deliveryRules->contains($deliveryRule)) {
+            $this->deliveryRules->add($deliveryRule);
+            $deliveryRule->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeliveryRule(DeliveryRule $deliveryRule): static
+    {
+        if ($this->deliveryRules->removeElement($deliveryRule)) {
+            // set the owning side to null (unless already changed)
+            if ($deliveryRule->getTenant() === $this) {
+                $deliveryRule->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Channel>
+     */
+    public function getChannels(): Collection
+    {
+        return $this->channels;
+    }
+
+    public function addChannel(Channel $channel): static
+    {
+        if (!$this->channels->contains($channel)) {
+            $this->channels->add($channel);
+            $channel->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChannel(Channel $channel): static
+    {
+        if ($this->channels->removeElement($channel)) {
+            // set the owning side to null (unless already changed)
+            if ($channel->getTenant() === $this) {
+                $channel->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Acknowledgement>
+     */
+    public function getAcknowledgements(): Collection
+    {
+        return $this->acknowledgements;
+    }
+
+    public function addAcknowledgement(Acknowledgement $acknowledgement): static
+    {
+        if (!$this->acknowledgements->contains($acknowledgement)) {
+            $this->acknowledgements->add($acknowledgement);
+            $acknowledgement->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAcknowledgement(Acknowledgement $acknowledgement): static
+    {
+        if ($this->acknowledgements->removeElement($acknowledgement)) {
+            // set the owning side to null (unless already changed)
+            if ($acknowledgement->getTenant() === $this) {
+                $acknowledgement->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): static
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+            $role->setTenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): static
+    {
+        if ($this->roles->removeElement($role)) {
+            // set the owning side to null (unless already changed)
+            if ($role->getTenant() === $this) {
+                $role->setTenant(null);
             }
         }
 

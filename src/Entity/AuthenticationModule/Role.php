@@ -3,6 +3,7 @@
 namespace App\Entity\AuthenticationModule;
 
 use ApiPlatform\Metadata\ApiResource;
+use App\Entity\MultitenancyModule\Tenant;
 use App\Repository\AuthenticationModule\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,6 +28,9 @@ class Role
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'roles')]
     private Collection $users;
+
+    #[ORM\ManyToOne(inversedBy: 'roles')]
+    private ?Tenant $tenant = null;
 
     public function __construct()
     {
@@ -73,6 +77,18 @@ class Role
         if ($this->users->removeElement($user)) {
             $user->removeRole($this);
         }
+
+        return $this;
+    }
+
+    public function getTenant(): ?Tenant
+    {
+        return $this->tenant;
+    }
+
+    public function setTenant(?Tenant $tenant): static
+    {
+        $this->tenant = $tenant;
 
         return $this;
     }

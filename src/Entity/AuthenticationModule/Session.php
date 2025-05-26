@@ -42,6 +42,9 @@ class Session
     #[ORM\Column]
     private ?bool $isRevoked = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $userAgentHash = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +142,18 @@ class Session
     public function setIsRevoked(bool $isRevoked): static
     {
         $this->isRevoked = $isRevoked;
+
+        return $this;
+    }
+
+    public function getUserAgentHash(): ?string
+    {
+        return $this->userAgentHash;
+    }
+
+    public function setUserAgentHash(?string $userAgentHash): static
+    {
+        $this->userAgentHash = $userAgentHash;
 
         return $this;
     }

@@ -4,6 +4,8 @@ namespace App\Entity\MultitenancyModule;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\AuthenticationModule\User;
+use App\Entity\NotificationModule\Audience;
+use App\Entity\NotificationModule\DeliveryRule;
 use App\Repository\MultitenancyModule\SegmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -38,10 +40,24 @@ class Segment
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'segments')]
     private Collection $users;
 
+    /**
+     * @var Collection<int, Audience>
+     */
+    #[ORM\ManyToMany(targetEntity: Audience::class, mappedBy: 'segments')]
+    private Collection $audiences;
+
+    /**
+     * @var Collection<int, DeliveryRule>
+     */
+    #[ORM\ManyToMany(targetEntity: DeliveryRule::class, mappedBy: 'segments')]
+    private Collection $deliveryRules;
+
     public function __construct()
     {
         $this->tenants = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->audiences = new ArrayCollection();
+        $this->deliveryRules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,6 +138,60 @@ class Segment
     {
         if ($this->users->removeElement($user)) {
             $user->removeSegment($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Audience>
+     */
+    public function getAudiences(): Collection
+    {
+        return $this->audiences;
+    }
+
+    public function addAudience(Audience $audience): static
+    {
+        if (!$this->audiences->contains($audience)) {
+            $this->audiences->add($audience);
+            $audience->addSegment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAudience(Audience $audience): static
+    {
+        if ($this->audiences->removeElement($audience)) {
+            $audience->removeSegment($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DeliveryRule>
+     */
+    public function getDeliveryRules(): Collection
+    {
+        return $this->deliveryRules;
+    }
+
+    public function addDeliveryRule(DeliveryRule $deliveryRule): static
+    {
+        if (!$this->deliveryRules->contains($deliveryRule)) {
+            $this->deliveryRules->add($deliveryRule);
+            $deliveryRule->addSegment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeliveryRule(DeliveryRule $deliveryRule): static
+    {
+        if ($this->deliveryRules->removeElement($deliveryRule)) {
+            $deliveryRule->removeSegment($this);
         }
 
         return $this;

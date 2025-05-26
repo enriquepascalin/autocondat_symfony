@@ -4,6 +4,7 @@ namespace App\Entity\WorkflowModule;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\MultitenancyModule\Tenant;
+use App\Entity\ProjectModule\ProjectPhase;
 use App\Repository\WorkflowModule\WorkflowExecutionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,6 +50,9 @@ class WorkflowExecution
      */
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'workflowExecution', orphanRemoval: true)]
     private Collection $tasks;
+
+    #[ORM\OneToOne(mappedBy: 'workflowExecution', cascade: ['persist', 'remove'])]
+    private ?ProjectPhase $projectPhase = null;
 
     public function __construct()
     {
@@ -170,6 +174,28 @@ class WorkflowExecution
                 $task->setWorkflowExecution(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProjectPhase(): ?ProjectPhase
+    {
+        return $this->projectPhase;
+    }
+
+    public function setProjectPhase(?ProjectPhase $projectPhase): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($projectPhase === null && $this->projectPhase !== null) {
+            $this->projectPhase->setWorkflowExecution(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($projectPhase !== null && $projectPhase->getWorkflowExecution() !== $this) {
+            $projectPhase->setWorkflowExecution($this);
+        }
+
+        $this->projectPhase = $projectPhase;
 
         return $this;
     }

@@ -3,6 +3,9 @@
 namespace App\Entity\AuthenticationModule;
 
 use App\Entity\MultitenancyModule\Segment;
+use App\Entity\NotificationModule\Audience;
+use App\Entity\ProjectModule\ProjectPhase;
+use App\Entity\ProjectModule\ProjectPhaseAssignment;
 use App\Repository\AuthenticationModule\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -54,12 +57,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Segment::class, inversedBy: 'users')]
     private Collection $segments;
 
+    /**
+     * @var Collection<int, ProjectPhase>
+     */
+    #[ORM\ManyToMany(targetEntity: ProjectPhase::class, mappedBy: 'assignees')]
+    private Collection $asignedProjectPhases;
+
+    /**
+     * @var Collection<int, ProjectPhaseAssignment>
+     */
+    #[ORM\OneToMany(targetEntity: ProjectPhaseAssignment::class, mappedBy: 'autocondatUser')]
+    private Collection $projectPhaseAssignments;
+
+    /**
+     * @var Collection<int, Audience>
+     */
+    #[ORM\ManyToMany(targetEntity: Audience::class, mappedBy: 'users')]
+    private Collection $audiences;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mfaSecret = null;
+
+    #[ORM\Column]
+    private ?bool $isMfaEnabled = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $passwordResetToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $passwordResetExpiresAt = null;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
         $this->consentLogs = new ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->segments = new ArrayCollection();
+        $this->asignedProjectPhases = new ArrayCollection();
+        $this->projectPhaseAssignments = new ArrayCollection();
+        $this->audiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,6 +267,138 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeSegment(Segment $segment): static
     {
         $this->segments->removeElement($segment);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectPhase>
+     */
+    public function getAsignedProjectPhases(): Collection
+    {
+        return $this->asignedProjectPhases;
+    }
+
+    public function addAsignedProjectPhase(ProjectPhase $asignedProjectPhase): static
+    {
+        if (!$this->asignedProjectPhases->contains($asignedProjectPhase)) {
+            $this->asignedProjectPhases->add($asignedProjectPhase);
+            $asignedProjectPhase->addAssignee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAsignedProjectPhase(ProjectPhase $asignedProjectPhase): static
+    {
+        if ($this->asignedProjectPhases->removeElement($asignedProjectPhase)) {
+            $asignedProjectPhase->removeAssignee($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjectPhaseAssignment>
+     */
+    public function getProjectPhaseAssignments(): Collection
+    {
+        return $this->projectPhaseAssignments;
+    }
+
+    public function addProjectPhaseAssignment(ProjectPhaseAssignment $projectPhaseAssignment): static
+    {
+        if (!$this->projectPhaseAssignments->contains($projectPhaseAssignment)) {
+            $this->projectPhaseAssignments->add($projectPhaseAssignment);
+            $projectPhaseAssignment->setAutocondatUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectPhaseAssignment(ProjectPhaseAssignment $projectPhaseAssignment): static
+    {
+        if ($this->projectPhaseAssignments->removeElement($projectPhaseAssignment)) {
+            // set the owning side to null (unless already changed)
+            if ($projectPhaseAssignment->getAutocondatUser() === $this) {
+                $projectPhaseAssignment->setAutocondatUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Audience>
+     */
+    public function getAudiences(): Collection
+    {
+        return $this->audiences;
+    }
+
+    public function addAudience(Audience $audience): static
+    {
+        if (!$this->audiences->contains($audience)) {
+            $this->audiences->add($audience);
+            $audience->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAudience(Audience $audience): static
+    {
+        if ($this->audiences->removeElement($audience)) {
+            $audience->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getMfaSecret(): ?string
+    {
+        return $this->mfaSecret;
+    }
+
+    public function setMfaSecret(?string $mfaSecret): static
+    {
+        $this->mfaSecret = $mfaSecret;
+
+        return $this;
+    }
+
+    public function isMfaEnabled(): ?bool
+    {
+        return $this->isMfaEnabled;
+    }
+
+    public function setIsMfaEnabled(bool $isMfaEnabled): static
+    {
+        $this->isMfaEnabled = $isMfaEnabled;
+
+        return $this;
+    }
+
+    public function getPasswordResetToken(): ?string
+    {
+        return $this->passwordResetToken;
+    }
+
+    public function setPasswordResetToken(?string $passwordResetToken): static
+    {
+        $this->passwordResetToken = $passwordResetToken;
+
+        return $this;
+    }
+
+    public function getPasswordResetExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->passwordResetExpiresAt;
+    }
+
+    public function setPasswordResetExpiresAt(?\DateTimeImmutable $passwordResetExpiresAt): static
+    {
+        $this->passwordResetExpiresAt = $passwordResetExpiresAt;
 
         return $this;
     }
