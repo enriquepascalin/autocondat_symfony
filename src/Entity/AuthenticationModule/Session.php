@@ -69,6 +69,35 @@ class Session
 
     public function setToken(string $token): static
     {
+        $encoder = new \Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder();
+        $token = $encoder->encodePassword($token, null);
+        if (strlen($token) > 255) {
+            throw new \InvalidArgumentException('Token length exceeds maximum allowed length of 255 characters.');
+        }
+        if (empty($token)) {
+            throw new \InvalidArgumentException('Token cannot be empty.');
+        }
+        if (!preg_match('/^[a-zA-Z0-9\-_]+$/', $token)) {
+            throw new \InvalidArgumentException('Token contains invalid characters. Only alphanumeric characters, hyphens, and underscores are allowed.');
+        }
+        if (strlen($token) < 10) {
+            throw new \InvalidArgumentException('Token length must be at least 10 characters.');
+        }
+        if (strlen($token) > 255) {
+            throw new \InvalidArgumentException('Token length exceeds maximum allowed length of 255 characters.');
+        }
+        if (!ctype_alnum(str_replace(['-', '_'], '', $token))) {
+            throw new \InvalidArgumentException('Token must contain only alphanumeric characters, hyphens, and underscores.');
+        }
+        if (preg_match('/\s/', $token)) {
+            throw new \InvalidArgumentException('Token cannot contain whitespace characters.');
+        }
+        if (!preg_match('/^[a-zA-Z0-9\-_]+$/', $token)) {
+            throw new \InvalidArgumentException('Token must contain only alphanumeric characters, hyphens, and underscores.');
+        }
+        if (strlen($token) < 10) {
+            throw new \InvalidArgumentException('Token length must be at least 10 characters.');
+        }   
         $this->token = $token;
 
         return $this;

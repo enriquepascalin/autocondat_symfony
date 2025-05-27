@@ -24,6 +24,9 @@ class Permission
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\Column(enumType: ScopeEnum::class)]
+    private ?ScopeEnum $scope = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,6 +52,18 @@ class Permission
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getScope(): ?ScopeEnum
+    {
+        return $this->scope;
+    }
+
+    public function setScope(ScopeEnum $scope): static
+    {
+        $this->scope = $scope;
 
         return $this;
     }

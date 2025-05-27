@@ -87,6 +87,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $passwordResetExpiresAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $mfaBackupCodes = null;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -399,6 +402,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPasswordResetExpiresAt(?\DateTimeImmutable $passwordResetExpiresAt): static
     {
         $this->passwordResetExpiresAt = $passwordResetExpiresAt;
+
+        return $this;
+    }
+
+    public function getMfaBackupCodes(): ?array
+    {
+        return $this->mfaBackupCodes;
+    }
+
+    public function setMfaBackupCodes(?array $mfaBackupCodes): static
+    {
+        $this->mfaBackupCodes = $mfaBackupCodes;
 
         return $this;
     }
