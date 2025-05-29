@@ -20,5 +20,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\EventListener\EntityTimestampListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, event: prePersist }
+            - { name: doctrine.orm.entity_listener, event: preUpdate }
+    
+    App\EventListener\EntityBlameListener:
+        arguments: ['@security.helper']
+        tags:
+            - { name: doctrine.orm.entity_listener, event: prePersist }
+            - { name: doctrine.orm.entity_listener, event: preUpdate }

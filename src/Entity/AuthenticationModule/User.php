@@ -6,18 +6,40 @@ use App\Entity\MultitenancyModule\Segment;
 use App\Entity\NotificationModule\Audience;
 use App\Entity\ProjectModule\ProjectPhase;
 use App\Entity\ProjectModule\ProjectPhaseAssignment;
+use App\Entity\SupportModule\Ticket;
 use App\Repository\AuthenticationModule\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Contracts\BlameableInterface;
+use App\Contracts\TimestampableInterface;
+use App\Contracts\SoftDeletableInterface;
+use App\Contracts\TenantAwareInterface;
+use App\Traits\BlameableTrait;
+use App\Traits\TimestampableTrait;
+use App\Traits\SoftDeletableTrait;
+use App\Traits\TenantAwareTrait;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TimestampableInterface, SoftDeletableInterface, TenantAwareInterface, BlameableInterface
 {
+    use TimestampableTrait;
+    use SoftDeletableTrait;
+    use TenantAwareTrait;
+    use BlameableTrait;
+
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_USER = 'ROLE_USER';
+
+    public const ROLES = [
+        self::ROLE_ADMIN,
+        self::ROLE_USER,
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -90,6 +112,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?array $mfaBackupCodes = null;
 
+    /**
+     * @var Collection<int, Ticket>
+     */
+    #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'owner', orphanRemoval: true)]
+    private Collection $tickets;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -99,6 +127,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->asignedProjectPhases = new ArrayCollection();
         $this->projectPhaseAssignments = new ArrayCollection();
         $this->audiences = new ArrayCollection();
+        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -414,6 +443,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setMfaBackupCodes(?array $mfaBackupCodes): static
     {
         $this->mfaBackupCodes = $mfaBackupCodes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ticket>
+     */
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
+
+    public function addTicket(Ticket $ticket): static
+    {
+        if (!$this->tickets->contains($ticket)) {
+            $this->tickets->add($ticket);
+            $ticket->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTicket(Ticket $ticket): static
+    {
+        if ($this->tickets->removeElement($ticket)) {
+            // set the owning side to null (unless already changed)
+            if ($ticket->getOwner() === $this) {
+                $ticket->setOwner(null);
+            }
+        }
 
         return $this;
     }
