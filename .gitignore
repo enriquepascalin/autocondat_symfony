@@ -23,3 +23,9 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> autocondat ###
+/.deepseek.log
+.deepseek.log.*
+/.deepseek.log.*
+###< autocondat ###
