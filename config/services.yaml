@@ -20,6 +20,16 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\TenantContext:
+        arguments:
+            $security: '@security.helper'
+
+    App\EventListener\TenantAwareListener:
+        arguments:
+            $tenantContext: '@App\Service\TenantContext'
+        tags:
+            - { name: doctrine.orm.entity_listener, event: prePersist }
+
     App\EventListener\EntityTimestampListener:
         tags:
             - { name: doctrine.orm.entity_listener, event: prePersist }
