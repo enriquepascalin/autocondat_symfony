@@ -265,3 +265,8 @@ workflow_execution_status:
   ACTIVE: "Active"
   COMPLETED: "Completed"
   FAILED: "Failed"
+
+translation_source:
+  MANUAL: "Manual"
+  AUTO: "Automatic"
+  IMPORTED: "Imported"

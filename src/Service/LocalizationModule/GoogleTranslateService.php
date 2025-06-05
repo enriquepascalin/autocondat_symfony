@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Translation;
+namespace App\Service\LocalizationModule;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Contracts\AutoTranslatorInterface;

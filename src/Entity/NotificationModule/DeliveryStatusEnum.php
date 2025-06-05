@@ -2,6 +2,9 @@
 
 namespace App\Entity\NotificationModule;
 
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 enum DeliveryStatusEnum: int implements TranslatableInterface
 {
     case QUEUED = 0;    // Queued
