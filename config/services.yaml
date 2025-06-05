@@ -40,3 +40,6 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener, event: prePersist }
             - { name: doctrine.orm.entity_listener, event: preUpdate }
+
+    # Enum translation services
+    App\Service\Translation\EnumTranslationService: ~

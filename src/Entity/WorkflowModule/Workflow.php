@@ -3,19 +3,32 @@
 namespace App\Entity\WorkflowModule;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Entity\SubscriptionModule\Module;
+use App\Entity\SubscriptionModule\Feature;
 use App\Repository\WorkflowModule\WorkflowRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use App\Contracts\BlameableInterface;
+use App\Contracts\TimestampableInterface;
+use App\Contracts\SoftDeletableInterface;
+use App\Contracts\TenantAwareInterface;
+use App\Traits\BlameableTrait;
+use App\Traits\TimestampableTrait;
+use App\Traits\SoftDeletableTrait;
+use App\Traits\TenantAwareTrait;
 
 #[ORM\Entity(repositoryClass: WorkflowRepository::class)]
 #[ApiResource]
 #[Broadcast]
 class Workflow
 {
+    use TimestampableTrait;
+    use SoftDeletableTrait;
+    use TenantAwareTrait;
+    use BlameableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -26,9 +39,6 @@ class Workflow
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\ManyToOne(inversedBy: 'workflows')]
-    private ?Module $module = null;
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $version = null;
@@ -56,6 +66,13 @@ class Workflow
      */
     #[ORM\OneToMany(targetEntity: WorkflowExecution::class, mappedBy: 'workflow', orphanRemoval: true)]
     private Collection $executions;
+
+    #[ORM\ManyToOne(inversedBy: 'workflows')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Feature $feature = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $entitlementRequirements = null;
 
     public function __construct()
     {
@@ -89,18 +106,6 @@ class Workflow
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getModule(): ?Module
-    {
-        return $this->module;
-    }
-
-    public function setModule(?Module $module): static
-    {
-        $this->module = $module;
 
         return $this;
     }
@@ -227,6 +232,30 @@ class Workflow
                 $execution->setWorkflow(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFeature(): ?Feature
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(?Feature $feature): static
+    {
+        $this->feature = $feature;
+
+        return $this;
+    }
+
+    public function getEntitlementRequirements(): ?array
+    {
+        return $this->entitlementRequirements;
+    }
+
+    public function setEntitlementRequirements(?array $entitlementRequirements): static
+    {
+        $this->entitlementRequirements = $entitlementRequirements;
 
         return $this;
     }

@@ -13,6 +13,7 @@ use App\Entity\ProjectModule\Project;
 use App\Entity\ProjectModule\ProjectPhase;
 use App\Entity\ProjectModule\ProjectPhaseAssignment;
 use App\Entity\StorageManagementModule\Document;
+use App\Entity\SubscriptionModule\MarketplaceTransaction;
 use App\Entity\WorkflowModule\Calendar;
 use App\Repository\MultitenancyModule\TenantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -135,6 +136,12 @@ class Tenant
     #[ORM\OneToMany(targetEntity: Role::class, mappedBy: 'tenant')]
     private Collection $roles;
 
+    /**
+     * @var Collection<int, MarketplaceTransaction>
+     */
+    #[ORM\OneToMany(targetEntity: MarketplaceTransaction::class, mappedBy: 'subscriptor', orphanRemoval: true)]
+    private Collection $marketplaceTransactions;
+
 
     public function __construct()
     {
@@ -153,6 +160,7 @@ class Tenant
         $this->channels = new ArrayCollection();
         $this->acknowledgements = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->marketplaceTransactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -658,6 +666,36 @@ class Tenant
             // set the owning side to null (unless already changed)
             if ($role->getTenant() === $this) {
                 $role->setTenant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MarketplaceTransaction>
+     */
+    public function getMarketplaceTransactions(): Collection
+    {
+        return $this->marketplaceTransactions;
+    }
+
+    public function addMarketplaceTransaction(MarketplaceTransaction $marketplaceTransaction): static
+    {
+        if (!$this->marketplaceTransactions->contains($marketplaceTransaction)) {
+            $this->marketplaceTransactions->add($marketplaceTransaction);
+            $marketplaceTransaction->setSubscriptor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketplaceTransaction(MarketplaceTransaction $marketplaceTransaction): static
+    {
+        if ($this->marketplaceTransactions->removeElement($marketplaceTransaction)) {
+            // set the owning side to null (unless already changed)
+            if ($marketplaceTransaction->getSubscriptor() === $this) {
+                $marketplaceTransaction->setSubscriptor(null);
             }
         }
 

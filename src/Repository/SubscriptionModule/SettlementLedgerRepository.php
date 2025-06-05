@@ -2,39 +2,39 @@
 
 namespace App\Repository\SubscriptionModule;
 
-use App\Entity\SubscriptionModule\Module;
+use App\Entity\SubscriptionModule\SettlementLedger;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Module>
+ * @extends ServiceEntityRepository<SettlementLedger>
  */
-class ModuleRepository extends ServiceEntityRepository
+class SettlementLedgerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Module::class);
+        parent::__construct($registry, SettlementLedger::class);
     }
 
     //    /**
-    //     * @return Module[] Returns an array of Module objects
+    //     * @return SettlementLedger[] Returns an array of SettlementLedger objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('m.id', 'ASC')
+    //            ->orderBy('s.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Module
+    //    public function findOneBySomeField($value): ?SettlementLedger
     //    {
-    //        return $this->createQueryBuilder('m')
-    //            ->andWhere('m.exampleField = :val')
+    //        return $this->createQueryBuilder('s')
+    //            ->andWhere('s.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

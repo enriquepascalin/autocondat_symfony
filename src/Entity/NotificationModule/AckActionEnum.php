@@ -2,9 +2,17 @@
 
 namespace App\Entity\NotificationModule;
 
-enum AckActionEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum AckActionEnum: string implements TranslatableInterface
 {
-    case DISMISSED = 'dismissed'; // Temporarily closed.
-    case CONFIRMED = 'confirmed'; // User saw the notification.
-    case AGREED = 'agreed';       // Accepted terms (e.g., legal docs).
+    case DISMISSED = 0; // Temporarily closed.
+    case CONFIRMED = 1; // User saw the notification.
+    case AGREED = 2; // Accepted terms (e.g., legal docs).
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('ack_action.' . $this->name, [], 'enums', $locale);
+    }
 }
