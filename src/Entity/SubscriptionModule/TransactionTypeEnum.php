@@ -2,15 +2,23 @@
 
 namespace App\Entity\SubscriptionModule;
 
-enum TransactionTypeEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum TransactionTypeEnum: int implements TranslatableInterface
 {
-    case PURCHASE = 'purchase';
-    case REFUND = 'refund';
-    case RENEWAL = 'renewal';
-    case CANCELLATION = 'cancellation';
-    case ADJUSTMENT = 'adjustment';
-    case UPGRADE = 'upgrade';
-    case DOWNGRADE = 'downgrade';
-    case TRIAL_START = 'trial_start';
-    case TRIAL_END = 'trial_end';
+    case PURCHASE = 0;      // Purchase
+    case REFUND = 1;        // Refund
+    case RENEWAL = 2;       // Renewal
+    case CANCELLATION = 3;  // Cancellation
+    case ADJUSTMENT = 4;    // Adjustment
+    case UPGRADE = 5;       // Upgrade
+    case DOWNGRADE = 6;     // Downgrade
+    case TRIAL_START = 7;   // Trial start
+    case TRIAL_END = 8;     // Trial end
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('transaction_type.' . $this->name, [], 'enums', $locale);
+    }
 }

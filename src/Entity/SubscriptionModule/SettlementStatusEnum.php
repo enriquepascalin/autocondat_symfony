@@ -2,11 +2,19 @@
 
 namespace App\Entity\SubscriptionModule;
 
-enum SettlementStatusEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum SettlementStatusEnum: int implements TranslatableInterface
 {
-    case PENDING = 'pending';
-    case COMPLETED = 'completed';
-    case FAILED = 'failed';
-    case REFUNDED = 'refunded';
-    case PARTIALLY_REFUNDED = 'partially_refunded';
+    case PENDING = 0;             // Pending
+    case COMPLETED = 1;           // Completed
+    case FAILED = 2;              // Failed
+    case REFUNDED = 3;            // Refunded
+    case PARTIALLY_REFUNDED = 4;  // Partially refunded
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('settlement_status.' . $this->name, [], 'enums', $locale);
+    }
 }

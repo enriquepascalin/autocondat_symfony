@@ -2,8 +2,16 @@
 
 namespace App\Entity\WorkflowModule;
 
-enum DeadlineTypeEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum DeadlineTypeEnum: int implements TranslatableInterface
 {
-    case FIXED = 'fixed';
-    case RELATIVE = 'relative';
+    case FIXED = 0;    // Fixed
+    case RELATIVE = 1; // Relative
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('deadline_type.' . $this->name, [], 'enums', $locale);
+    }
 }

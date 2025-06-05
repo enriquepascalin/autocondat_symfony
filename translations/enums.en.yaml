@@ -1,0 +1,267 @@
+ack_action:
+  DISMISSED: "Dismissed"
+  CONFIRMED: "Confirmed"
+  AGREED: "Agreed"
+
+channel_type:
+  EMAIL: "Email notifications"
+  SMS: "SMS notifications"
+  IN_APP: "Uses Symfony Mercure or WebSocket"
+  SLACK: "Slack notifications"
+  PUSH: "Mobile push notifications"
+  WEBHOOK: "Webhook notifications"
+
+delivery_status:
+  QUEUED: "Queued"
+  SENT: "Sent"
+  DELIVERED: "Delivered"
+  FAILED: "Failed"
+
+notification_status:
+  DRAFT: "Draft"
+  SCHEDULED: "Scheduled"
+  SENT: "Sent"
+  FAILED: "Failed"
+
+notification_type:
+  ALERT: "Alert"
+  REMINDER: "Reminder"
+  SYSTEM: "System"
+  ACTION_REQUIRED: "Action required"
+
+provider:
+  SYMFONY_MAILER: "Symfony Mailer"
+  TWILIO: "Twilio"
+  CUSTOM_API: "Custom API"
+
+assignment_role:
+  OWNER: "Owner"
+  CONTRIBUTOR: "Contributor"
+  REVIEWER: "Reviewer"
+
+document_category:
+  CONTRACT: "Contract"
+  REPORT: "Report"
+  DESIGN: "Design"
+  OTHER: "Other"
+
+phase_status:
+  NOT_STARTED: "Not started"
+  IN_PROGRESS: "In progress"
+  COMPLETED: "Completed"
+  BLOCKED: "Blocked"
+
+phase_type:
+  MILESTONE: "Milestone"
+  SPRINT: "Sprint"
+  TASK_GROUP: "Task group"
+  DELIVERABLE: "Deliverable"
+
+project_type:
+  SCRUM: "Scrum"
+  KANBAN: "Kanban"
+  WATERFALL: "Waterfall"
+  CUSTOM: "Custom"
+
+approval_status:
+  PENDING: "Pending"
+  APPROVED: "Approved"
+  REJECTED: "Rejected"
+  CANCELLED: "Cancelled"
+
+bundle_status:
+  DRAFT: "Draft"
+  ACTIVE: "Active"
+  ARCHIVED: "Archived"
+  DELETED: "Deleted"
+
+bundle_type:
+  PLAN: "Plan"
+  TIER: "Tier"
+  PACKAGE: "Package"
+
+feature_type:
+  MODULE: "Module"
+  SUBMODULE: "Submodule"
+  FUNCTION: "Function"
+  INFRASTRUCTURE: "Infrastructure"
+  INTEGRATION: "Integration"
+  CUSTOM: "Custom"
+  OTHER: "Other"
+
+marketplace_item_type:
+  FEATURE: "Feature"
+  SERVICE: "Service"
+  BUNDLE: "Bundle"
+  SUBSCRIPTION: "Subscription"
+
+pricing_model:
+  FREE: "Free"
+  ONE_TIME: "One-time"
+  SUBSCRIPTION: "Subscription"
+  USAGE_BASED: "Usage-based"
+  CREDIT_BASED: "Credit-based"
+  PAY_AS_YOU_GO: "Pay as you go"
+  CUSTOM: "Custom"
+
+profile_status:
+  UNVERIFIED: "Unverified"
+  VERIFIED: "Verified"
+  SUSPENDED: "Suspended"
+
+service_type:
+  SUPPORT: "Support"
+  TRAINING: "Training"
+  CONSULTING: "Consulting"
+  DEVELOPMENT: "Development"
+  MAINTENANCE: "Maintenance"
+  INFRASTRUCTURE: "Infrastructure"
+  OTHER: "Other"
+
+settlement_status:
+  PENDING: "Pending"
+  COMPLETED: "Completed"
+  FAILED: "Failed"
+  REFUNDED: "Refunded"
+  PARTIALLY_REFUNDED: "Partially refunded"
+
+subscription_status:
+  ACTIVE: "Active"
+  PENDING: "Pending"
+  SUSPENDED: "Suspended"
+  CANCELLED: "Cancelled"
+
+transaction_type:
+  PURCHASE: "Purchase"
+  REFUND: "Refund"
+  RENEWAL: "Renewal"
+  CANCELLATION: "Cancellation"
+  ADJUSTMENT: "Adjustment"
+  UPGRADE: "Upgrade"
+  DOWNGRADE: "Downgrade"
+  TRIAL_START: "Trial start"
+  TRIAL_END: "Trial end"
+
+incidence_type:
+  BUG: "Bug"
+  CHANGE_REQUEST: "Change request"
+  OTHER: "Other"
+  INCIDENT: "Incident"
+  SERVICE_REQUEST: "Service request"
+  COMPLAINT: "Complaint"
+  SECURITY: "Security"
+  PERFORMANCE: "Performance"
+  USABILITY: "Usability"
+  MAINTENANCE: "Maintenance"
+  CONFIGURATION: "Configuration"
+  DATA_ISSUE: "Data issue"
+  INTEGRATION: "Integration"
+  TRAINING: "Training"
+  DOCUMENTATION: "Documentation"
+  LEGAL: "Legal"
+  BILLING: "Billing"
+  OTHER_REQUEST: "Other request"
+  FEEDBACK: "Feedback"
+  FEATURE_REQUEST: "Feature request"
+  SYSTEM_OUTAGE: "System outage"
+  ACCOUNT_ISSUE: "Account issue"
+  ACCESS_ISSUE: "Access issue"
+  NETWORK_ISSUE: "Network issue"
+  HARDWARE_ISSUE: "Hardware issue"
+  SOFTWARE_ISSUE: "Software issue"
+  PERFORMANCE_ISSUE: "Performance issue"
+  COMPATIBILITY_ISSUE: "Compatibility issue"
+  SECURITY_BREACH: "Security breach"
+  PRIVACY_ISSUE: "Privacy issue"
+  COMPLIANCE_ISSUE: "Compliance issue"
+  OTHER_INCIDENT: "Other incident"
+  SERVICE_DISRUPTION: "Service disruption"
+  SERVICE_LEVEL_AGREEMENT: "Service level agreement"
+  SERVICE_ENHANCEMENT: "Service enhancement"
+  SERVICE_OPTIMIZATION: "Service optimization"
+  SERVICE_REVIEW: "Service review"
+  SERVICE_FEEDBACK: "Service feedback"
+  SERVICE_COMPLAINT: "Service complaint"
+  SERVICE_REQUEST_FULFILLMENT: "Service request fulfillment"
+  SERVICE_REQUEST_CANCELLATION: "Service request cancellation"
+  SERVICE_REQUEST_MODIFICATION: "Service request modification"
+  SERVICE_REQUEST_STATUS_UPDATE: "Service request status update"
+  SERVICE_REQUEST_ESCALATION: "Service request escalation"
+  SERVICE_REQUEST_RESOLUTION: "Service request resolution"
+
+severity:
+  LOW: "Low"
+  MEDIUM: "Medium"
+  HIGH: "High"
+  CRITICAL: "Critical"
+  EMERGENCY: "Emergency"
+  BLOCKER: "Blocker"
+
+ticket_status:
+  OPEN: "Open"
+  IN_PROGRESS: "In progress"
+  RESOLVED: "Resolved"
+  CLOSED: "Closed"
+  REOPENED: "Reopened"
+  ESCALATED: "Escalated"
+  ON_HOLD: "On hold"
+  CANCELLED: "Cancelled"
+  PENDING: "Pending"
+  WAITING_FOR_CUSTOMER: "Waiting for customer"
+  WAITING_FOR_SUPPORT: "Waiting for support"
+  AWAITING_RESPONSE: "Awaiting response"
+  UNDER_REVIEW: "Under review"
+  IN_REVIEW: "In review"
+
+actor_type:
+  USER: "User"
+  SYSTEM: "System"
+  API: "API"
+
+business_rule_type:
+  TIME: "Time"
+  EVENT: "Event"
+  DATA: "Data"
+
+condition_type:
+  EXPRESSION: "Expression"
+  API: "API"
+
+deadline_type:
+  FIXED: "Fixed"
+  RELATIVE: "Relative"
+
+history_log_event_type:
+  STATE_CHANGE: "State change"
+  TASK_ASSIGNED: "Task assigned"
+  RULE_TRIGGERED: "Rule triggered"
+
+recurrance_rule_frequency:
+  STATE_CHANGE: "State change"
+  TASK_ASSIGNED: "Task assigned"
+  RULE_TRIGGERED: "Rule triggered"
+
+state_type:
+  START: "Start"
+  INTERMEDIATE: "Intermediate"
+  END: "End"
+
+task_priority:
+  LOW: "Low"
+  MEDIUM: "Medium"
+  HIGH: "High"
+
+task_status:
+  PENDING: "Pending"
+  IN_PROGRESS: "In progress"
+  COMPLETED: "Completed"
+  OVERDUE: "Overdue"
+
+transition_condition_mode:
+  ALL: "All"
+  ANY: "Any"
+
+workflow_execution_status:
+  ACTIVE: "Active"
+  COMPLETED: "Completed"
+  FAILED: "Failed"

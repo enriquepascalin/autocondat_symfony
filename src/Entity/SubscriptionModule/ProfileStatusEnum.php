@@ -2,9 +2,17 @@
 
 namespace App\Entity\SubscriptionModule;
 
-enum ProfileStatusEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum ProfileStatusEnum: int implements TranslatableInterface
 {
-    case UNVERIFIED = 'unverified';
-    case VERIFIED = 'verified';
-    case SUSPENDED = 'suspended';
+    case UNVERIFIED = 0; // Unverified
+    case VERIFIED = 1;   // Verified
+    case SUSPENDED = 2;  // Suspended
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('profile_status.' . $this->name, [], 'enums', $locale);
+    }
 }

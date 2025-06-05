@@ -2,20 +2,28 @@
 
 namespace App\Entity\SupportModule;
 
-enum TicketStatusEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum TicketStatusEnum: int implements TranslatableInterface
 {
-    case OPEN = 'open';
-    case IN_PROGRESS = 'in_progress';
-    case RESOLVED = 'resolved';
-    case CLOSED = 'closed';
-    case REOPENED = 'reopened';
-    case ESCALATED = 'escalated';
-    case ON_HOLD = 'on_hold';
-    case CANCELLED = 'cancelled';
-    case PENDING = 'pending';
-    case WAITING_FOR_CUSTOMER = 'waiting_for_customer';
-    case WAITING_FOR_SUPPORT = 'waiting_for_support';
-    case AWAITING_RESPONSE = 'awaiting_response';
-    case UNDER_REVIEW = 'under_review';
-    case IN_REVIEW = 'in_review';
+    case OPEN = 0;                  // Open
+    case IN_PROGRESS = 1;           // In progress
+    case RESOLVED = 2;              // Resolved
+    case CLOSED = 3;                // Closed
+    case REOPENED = 4;              // Reopened
+    case ESCALATED = 5;             // Escalated
+    case ON_HOLD = 6;               // On hold
+    case CANCELLED = 7;             // Cancelled
+    case PENDING = 8;               // Pending
+    case WAITING_FOR_CUSTOMER = 9;  // Waiting for customer
+    case WAITING_FOR_SUPPORT = 10;  // Waiting for support
+    case AWAITING_RESPONSE = 11;    // Awaiting response
+    case UNDER_REVIEW = 12;         // Under review
+    case IN_REVIEW = 13;            // In review
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('ticket_status.' . $this->name, [], 'enums', $locale);
+    }
 }

@@ -2,12 +2,20 @@
 
 namespace App\Entity\SupportModule;
 
-enum SeverityEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum SeverityEnum: int implements TranslatableInterface
 {
-    case LOW = 'low';
-    case MEDIUM = 'medium';
-    case HIGH = 'high';
-    case CRITICAL = 'critical';
-    case EMERGENCY = 'emergency';
-    case BLOCKER = 'blocker';    
+    case LOW = 0;        // Low
+    case MEDIUM = 1;     // Medium
+    case HIGH = 2;       // High
+    case CRITICAL = 3;   // Critical
+    case EMERGENCY = 4;  // Emergency
+    case BLOCKER = 5;    // Blocker
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('severity.' . $this->name, [], 'enums', $locale);
+    }
 }

@@ -2,13 +2,21 @@
 
 namespace App\Entity\SubscriptionModule;
 
-enum ServiceTypeEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum ServiceTypeEnum: int implements TranslatableInterface
 {
-    case SUPPORT = 'support';
-    case TRAINING = 'training';
-    case CONSULTING = 'consulting';
-    case DEVELOPMENT = 'development';
-    case MAINTENANCE = 'maintenance';
-    case INFRASTRUCTURE = 'infrastructure';
-    case OTHER = 'other';
+    case SUPPORT = 0;        // Support
+    case TRAINING = 1;       // Training
+    case CONSULTING = 2;     // Consulting
+    case DEVELOPMENT = 3;    // Development
+    case MAINTENANCE = 4;    // Maintenance
+    case INFRASTRUCTURE = 5; // Infrastructure
+    case OTHER = 6;          // Other
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('service_type.' . $this->name, [], 'enums', $locale);
+    }
 }

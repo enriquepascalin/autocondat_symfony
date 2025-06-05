@@ -43,3 +43,7 @@ services:
 
     # Enum translation services
     App\Service\Translation\EnumTranslationService: ~
+
+    App\Service\Translation\GoogleTranslateService:
+    arguments:
+        $apiKey: '%env(resolve:GOOGLE_TRANSLATE_API_KEY)%'

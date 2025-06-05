@@ -5,7 +5,7 @@ namespace App\Entity\NotificationModule;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-enum AckActionEnum: string implements TranslatableInterface
+enum AckActionEnum: int implements TranslatableInterface
 {
     case DISMISSED = 0; // Temporarily closed.
     case CONFIRMED = 1; // User saw the notification.

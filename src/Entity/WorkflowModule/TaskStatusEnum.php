@@ -2,10 +2,18 @@
 
 namespace App\Entity\WorkflowModule;
 
-enum TaskStatusEnum: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum TaskStatusEnum: int implements TranslatableInterface
 {
-    case PENDING = 'pending';
-    case IN_PROGRESS = 'in_progress';
-    case COMPLETED = 'completed';
-    case OVERDUE = 'overdue';
+    case PENDING = 0;      // Pending
+    case IN_PROGRESS = 1;  // In progress
+    case COMPLETED = 2;    // Completed
+    case OVERDUE = 3;      // Overdue
+
+    public function trans(TranslatorInterface $translator, string $locale = null): string
+    {
+        return $translator->trans('task_status.' . $this->name, [], 'enums', $locale);
+    }
 }
