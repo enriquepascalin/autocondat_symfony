@@ -18,12 +18,17 @@ class TranslationEntryRepository extends ServiceEntityRepository
 
     public function findByKeyAndLocale(string $key, string $locale, string $domain, ?string $tenantId): ?TranslationEntry
     {
-        return $this->findOneBy([
+        $criteria = [
             'key' => $key,
             'locale' => $locale,
             'domain' => $domain,
-            'tenantId' => $tenantId
-        ]);
+        ];
+
+        if ($tenantId !== null) {
+            $criteria['tenantId'] = $tenantId;
+        }
+
+        return $this->findOneBy($criteria);
     }
 
 //    /**

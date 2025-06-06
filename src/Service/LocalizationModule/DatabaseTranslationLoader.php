@@ -14,7 +14,7 @@ class DatabaseTranslationLoader implements LoaderInterface
      * @param TranslationEntryRepository $repository
      */
     public function __construct(
-        private TranslationEntryRepository $repository
+         private readonly TranslationEntryRepository $repository
     ) {}
 
     /**
@@ -29,7 +29,6 @@ class DatabaseTranslationLoader implements LoaderInterface
     {
         $catalogue = new MessageCatalogue($locale);
         $entries = $this->repository->findBy(['locale' => $locale, 'domain' => $domain]);
-
         foreach ($entries as $entry) {
             $catalogue->set($entry->getKey(), $entry->getValue(), $domain);
         }
