@@ -46,19 +46,41 @@ class TranslationManager
             }
 
             $translated = $this->autoTranslator->translate($fallbackText, 'en', $locale);
-
-            $entry = new TranslationEntry();
-            $entry->setKey($key);
-            $entry->setLocale($locale);
-            $entry->setValue($translated);
-            $entry->setDomain($domain);
-            $entry->setSource(TranslationSourceEnum::AUTO);
-            $entry->setTenantId($tenantId);
-
-            $this->em->persist($entry);
-            $this->em->flush();
+            $this->createFallbackEntry($key, $translated, $domain, $locale, $tenantId);
 
             return $translated;
         });
+    }
+
+    /**
+     * Creates a fallback translation entry in the database.
+     *
+     * This is used when no translation is found and we want to store a fallback
+     * for future use, especially for auto-translated entries.
+     * 
+     * @param string $key The translation key
+     * @param string $domain The translation domain
+     * @param string $locale The locale for the translation
+     * @param string $value The translated value to store
+     * @param string|null $tenantId Optional tenant ID for multi-tenant systems
+     * @return TranslationEntry The created translation entry
+     */
+    public function createFallbackEntry(
+        string $key,
+        string $translated,
+        string $domain = 'messages',
+        ?string $locale = null,
+        ?string $tenantId = null
+    ): void {
+        $entry = new TranslationEntry();
+        $entry->setKey($key);
+        $entry->setLocale($locale ?? 'en');
+        $entry->setValue($translated);
+        $entry->setDomain($domain);
+        $entry->setSource(TranslationSourceEnum::AUTO);
+        $entry->setTenantId($tenantId);
+
+        $this->em->persist($entry);
+        $this->em->flush();
     }
 }

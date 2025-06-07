@@ -32,17 +32,16 @@ class LocaleListener
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-
-        // 1. Try user locale
         $user = $this->security->getUser();
+
         if ($user instanceof User && $user->getLocale()) {
             $locale = $user->getLocale();
+        } elseif ($request->query->has('_locale')) {
+            $locale = $request->query->get('_locale'); 
         } else {
-            // 2. Fallback to request _locale
             $locale = $request->getLocale() ?? $request->query->get('_locale', $request->getDefaultLocale());
         }
 
-        // Apply locale to request and translator
         $request->setLocale($locale);
         $this->translator->setLocale($locale);
     }

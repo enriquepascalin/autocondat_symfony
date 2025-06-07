@@ -26,11 +26,11 @@ class TranslationResolverService
      *
      * @param string $key Translation key
      * @param array $parameters Parameters for replacement
-     * @param string|null $domain Translation domain (defaults to 'messages')
-     * @param string|null $locale Target locale (null = default locale)
+     * @param ?string|null $domain Translation domain (defaults to 'messages')
+     * @param ?string|null $locale Target locale (null = default locale)
      * @return string Translated string
      */
-    public function trans(string $key, array $parameters = [], string $domain = null, string $locale = null): string
+    public function trans(string $key, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         $translated = $this->translator->trans($key, $parameters, $domain, $locale);
 

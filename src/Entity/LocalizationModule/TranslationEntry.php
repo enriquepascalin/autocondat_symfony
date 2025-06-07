@@ -7,6 +7,7 @@ use App\Repository\LocalizationModule\TranslationEntryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use App\Entity\LocalizationModule\TranslationSourceEnum;
 use App\Contracts\BlameableInterface;
 use App\Contracts\TimestampableInterface;
 use App\Contracts\SoftDeletableInterface;
@@ -43,8 +44,8 @@ class TranslationEntry implements TimestampableInterface, SoftDeletableInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $value = null;
 
-    #[ORM\Column(length: 32, nullable: true)]
-    private ?string $source = null;
+    #[ORM\Column(enumType: TranslationSourceEnum::class, nullable: true)]
+    private ?TranslationSourceEnum $source = null;
 
     #[ORM\Column]
     private ?bool $isOverride = null;
@@ -102,12 +103,12 @@ class TranslationEntry implements TimestampableInterface, SoftDeletableInterface
         return $this;
     }
 
-    public function getSource(): ?string
+    public function getSource(): ?TrabslationSourceEnum
     {
         return $this->source;
     }
 
-    public function setSource(?string $source): static
+    public function setSource(?TrabslationSourceEnum $source): static
     {
         $this->source = $source;
 
