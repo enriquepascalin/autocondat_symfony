@@ -19,7 +19,7 @@ use App\Traits\TenantAwareTrait;
 #[ORM\Entity(repositoryClass: TranslationEntryRepository::class)]
 #[ApiResource]
 #[Broadcast]
-class TranslationEntry
+class TranslationEntry implements TimestampableInterface, SoftDeletableInterface, TenantAwareInterface, BlameableInterface
 {
     use TimestampableTrait;
     use SoftDeletableTrait;
@@ -45,6 +45,9 @@ class TranslationEntry
 
     #[ORM\Column(length: 32, nullable: true)]
     private ?string $source = null;
+
+    #[ORM\Column]
+    private ?bool $isOverride = null;
 
     public function getId(): ?int
     {
@@ -107,6 +110,18 @@ class TranslationEntry
     public function setSource(?string $source): static
     {
         $this->source = $source;
+
+        return $this;
+    }
+
+    public function isOverride(): ?bool
+    {
+        return $this->isOverride;
+    }
+
+    public function setIsOverride(bool $isOverride): static
+    {
+        $this->isOverride = $isOverride;
 
         return $this;
     }

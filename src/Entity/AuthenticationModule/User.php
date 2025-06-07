@@ -125,6 +125,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     #[ORM\OneToMany(targetEntity: License::class, mappedBy: 'assignedUser')]
     private Collection $licenses;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $locale = null;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -511,6 +514,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
                 $license->setAssignedUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }
