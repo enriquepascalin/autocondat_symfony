@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -11,7 +13,7 @@ class EntityTimestampListener
     {
         $entity = $args->getObject();
 
-        if ($entity instanceof TimestampableInterface  && $entity->getCreatedAt() === null) {
+        if ($entity instanceof TimestampableInterface  && null === $entity->getCreatedAt()) {
             $entity->setCreatedAt(new \DateTimeImmutable());
             $entity->setUpdatedAt(new \DateTimeImmutable());
         }

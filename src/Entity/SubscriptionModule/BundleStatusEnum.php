@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum BundleStatusEnum: int implements TranslatableInterface
     case ARCHIVED = 2; // Archived
     case DELETED = 3;  // Deleted
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('bundle_status.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('bundle_status.'.$this->name, [], 'enums', $locale);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\WorkflowModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -11,8 +13,8 @@ enum StateTypeEnum: int implements TranslatableInterface
     case INTERMEDIATE = 1;  // Intermediate
     case END = 2;           // End
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('state_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('state_type.'.$this->name, [], 'enums', $locale);
     }
 }

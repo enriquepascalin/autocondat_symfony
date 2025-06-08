@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\LocalizationModule;
 
 use App\Entity\LocalizationModule\TranslationEntry;
@@ -41,7 +43,7 @@ class DatabaseTranslationLoaderTest extends TestCase
 
         // Assert
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);
-        $this->assertSame($locale, $catalogue->getLocale(), "Catalogue locale should match requested locale.");
+        $this->assertSame($locale, $catalogue->getLocale(), 'Catalogue locale should match requested locale.');
         // Ensure all translations from repository are present in the catalogue
         $this->assertSame('hola', $catalogue->get('hello', $domain));
         $this->assertSame('adios', $catalogue->get('goodbye', $domain));
@@ -60,7 +62,7 @@ class DatabaseTranslationLoaderTest extends TestCase
 
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);
         $this->assertSame($locale, $catalogue->getLocale());
-        $this->assertEmpty($catalogue->all($domain), "Catalogue should be empty when repository returns no translations.");
+        $this->assertEmpty($catalogue->all($domain), 'Catalogue should be empty when repository returns no translations.');
     }
 
     public function testLoadDefaultsToMessagesDomain(): void

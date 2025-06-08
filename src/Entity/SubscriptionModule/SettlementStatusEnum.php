@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -13,8 +15,8 @@ enum SettlementStatusEnum: int implements TranslatableInterface
     case REFUNDED = 3;            // Refunded
     case PARTIALLY_REFUNDED = 4;  // Partially refunded
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('settlement_status.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('settlement_status.'.$this->name, [], 'enums', $locale);
     }
 }

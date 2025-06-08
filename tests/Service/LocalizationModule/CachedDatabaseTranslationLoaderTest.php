@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\LocalizationModule;
 
 use App\Service\LocalizationModule\CachedDatabaseTranslationLoader;
@@ -33,6 +35,7 @@ class CachedDatabaseTranslationLoaderTest extends TestCase
                       if (!array_key_exists($key, $cacheStorage)) {
                           $cacheStorage[$key] = $callback($this->createStub(ItemInterface::class));
                       }
+
                       return $cacheStorage[$key];
                   });
 
@@ -43,7 +46,7 @@ class CachedDatabaseTranslationLoaderTest extends TestCase
         $catalogue2 = $cachedLoader->load(null, $locale, $domain);
 
         // Assert same instance is returned from cache and contains expected data
-        $this->assertSame($catalogue1, $catalogue2, "The same MessageCatalogue instance should be returned on subsequent calls (cache hit).");
+        $this->assertSame($catalogue1, $catalogue2, 'The same MessageCatalogue instance should be returned on subsequent calls (cache hit).');
         $this->assertSame('bonjour', $catalogue2->get('hello', $domain));
     }
 
@@ -77,6 +80,7 @@ class CachedDatabaseTranslationLoaderTest extends TestCase
                       if (!array_key_exists($key, $cacheStorage)) {
                           $cacheStorage[$key] = $callback($this->createStub(ItemInterface::class));
                       }
+
                       return $cacheStorage[$key];
                   });
 
@@ -89,6 +93,6 @@ class CachedDatabaseTranslationLoaderTest extends TestCase
         // Assert: each call returns its respective catalogue
         $this->assertSame('hello', $result1->get('greet', $domain1));
         $this->assertSame('hola', $result2->get('greet', $domain1));
-        $this->assertNotSame($result1, $result2, "Different locale/domain combinations should produce separate cached entries.");
+        $this->assertNotSame($result1, $result2, 'Different locale/domain combinations should produce separate cached entries.');
     }
 }

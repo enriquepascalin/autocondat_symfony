@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -19,6 +21,7 @@ trait TenantAwareTrait
     public function setTenant(?Tenant $tenant): self
     {
         $this->tenant = $tenant;
+
         return $this;
     }
 }

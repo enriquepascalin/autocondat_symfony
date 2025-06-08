@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\ProjectModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum PhaseStatusEnum: int implements TranslatableInterface
     case COMPLETED = 2;   // Completed
     case BLOCKED = 3;     // Blocked
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('phase_status.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('phase_status.'.$this->name, [], 'enums', $locale);
     }
 }

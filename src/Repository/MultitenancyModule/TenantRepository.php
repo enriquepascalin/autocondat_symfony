@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\MultitenancyModule;
 
 use App\Entity\MultitenancyModule\Tenant;

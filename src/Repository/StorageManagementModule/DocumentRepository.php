@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\StorageManagementModule;
 
 use App\Entity\StorageManagementModule\Document;

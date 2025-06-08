@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Tests\Service\LocalizationModule;
 
 use App\Service\LocalizationModule\GoogleTranslateService;
@@ -21,9 +24,9 @@ class GoogleTranslateServiceTest extends TestCase
         $responseStub->method('toArray')->willReturn([
             'data' => [
                 'translations' => [
-                    ['translatedText' => $expectedTranslation]
-                ]
-            ]
+                    ['translatedText' => $expectedTranslation],
+                ],
+            ],
         ]);
 
         // Mock HttpClient to expect a POST request with correct parameters
@@ -42,6 +45,7 @@ class GoogleTranslateServiceTest extends TestCase
                                $this->assertEquals($sourceLang, $query['source'] ?? null);
                                $this->assertEquals($targetLang, $query['target'] ?? null);
                                $this->assertEquals('text', $query['format'] ?? null);
+
                                return true;
                            })
                        )
@@ -53,7 +57,7 @@ class GoogleTranslateServiceTest extends TestCase
         $result = $service->translate($text, $sourceLang, $targetLang);
 
         // Assert
-        $this->assertSame($expectedTranslation, $result, "Should return the translated text from Google API response.");
+        $this->assertSame($expectedTranslation, $result, 'Should return the translated text from Google API response.');
     }
 
     public function testTranslateReturnsOriginalTextOnMalformedResponse(): void
@@ -68,9 +72,9 @@ class GoogleTranslateServiceTest extends TestCase
         $responseStub->method('toArray')->willReturn([
             'data' => [
                 'translations' => [
-                    ['detectedSourceLanguage' => 'en'] // no 'translatedText'
-                ]
-            ]
+                    ['detectedSourceLanguage' => 'en'], // no 'translatedText'
+                ],
+            ],
         ]);
 
         $httpClientStub = $this->createStub(HttpClientInterface::class);
@@ -82,7 +86,7 @@ class GoogleTranslateServiceTest extends TestCase
         $result = $service->translate($text, $sourceLang, $targetLang);
 
         // Assert
-        $this->assertSame($text, $result, "Should return the original text if the API response is missing translation data.");
+        $this->assertSame($text, $result, 'Should return the original text if the API response is missing translation data.');
     }
 
     public function testTranslateThrowsExceptionOnRequestFailure(): void
@@ -91,7 +95,7 @@ class GoogleTranslateServiceTest extends TestCase
         $apiKey = 'key';
 
         $responseStub = $this->createStub(ResponseInterface::class);
-        $responseStub->method('toArray')->willThrowException(new \RuntimeException("HTTP error"));
+        $responseStub->method('toArray')->willThrowException(new \RuntimeException('HTTP error'));
 
         $httpClientStub = $this->createStub(HttpClientInterface::class);
         $httpClientStub->method('request')->willReturn($responseStub);

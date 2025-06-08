@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\WorkflowModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -11,8 +13,8 @@ enum BusinessRuleTypeEnum: int implements TranslatableInterface
     case EVENT = 1;  // Event
     case DATA = 2;   // Data
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('business_rule_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('business_rule_type.'.$this->name, [], 'enums', $locale);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener;
 
 use App\Entity\User;
@@ -14,20 +16,21 @@ use Symfony\Contracts\Translation\LocaleAwareInterface;
 class LocaleListener
 {
     /**
-     * @param Security $security Security component to get the current user.
-     * @param RequestStack $requestStack Current request stack.
-     * @param LocaleAwareInterface $translator Symfony translator to set locale globally.
+     * @param Security             $security     security component to get the current user
+     * @param RequestStack         $requestStack current request stack
+     * @param LocaleAwareInterface $translator   symfony translator to set locale globally
      */
     public function __construct(
         private readonly Security $security,
         private readonly RequestStack $requestStack,
         private readonly LocaleAwareInterface $translator,
-    ) {}
+    ) {
+    }
 
     /**
      * Sets locale from authenticated user, request `_locale` or default.
      *
-     * @param RequestEvent $event The kernel request event.
+     * @param RequestEvent $event the kernel request event
      */
     public function onKernelRequest(RequestEvent $event): void
     {
@@ -37,7 +40,7 @@ class LocaleListener
         if ($user instanceof User && $user->getLocale()) {
             $locale = $user->getLocale();
         } elseif ($request->query->has('_locale')) {
-            $locale = $request->query->get('_locale'); 
+            $locale = $request->query->get('_locale');
         } else {
             $locale = $request->getLocale() ?? $request->query->get('_locale', $request->getDefaultLocale());
         }

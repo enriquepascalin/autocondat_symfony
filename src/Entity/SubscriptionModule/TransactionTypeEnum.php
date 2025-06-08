@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -17,8 +19,8 @@ enum TransactionTypeEnum: int implements TranslatableInterface
     case TRIAL_START = 7;   // Trial start
     case TRIAL_END = 8;     // Trial end
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('transaction_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('transaction_type.'.$this->name, [], 'enums', $locale);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\LocalizationModule;
 
 use App\Contracts\AutoTranslatorInterface;
@@ -19,8 +21,9 @@ class TranslationManager
         private TranslationEntryRepository $repository,
         private EntityManagerInterface $em,
         private CacheInterface $cache,
-        private AutoTranslatorInterface $autoTranslator // 🔧 This is the corrected argument name
-    ) {}
+        private AutoTranslatorInterface $autoTranslator, // 🔧 This is the corrected argument name
+    ) {
+    }
 
     /**
      * Returns a translated string by checking cache, DB or auto-translating.
@@ -30,7 +33,7 @@ class TranslationManager
         string $domain,
         string $locale,
         ?string $fallbackText = null,
-        ?string $tenantId = null
+        ?string $tenantId = null,
     ): string {
         $cacheKey = "trans_{$tenantId}_{$domain}_{$locale}_{$key}";
 
@@ -57,12 +60,12 @@ class TranslationManager
      *
      * This is used when no translation is found and we want to store a fallback
      * for future use, especially for auto-translated entries.
-     * 
-     * @param string $key The translation key
-     * @param string $domain The translation domain
-     * @param string $locale The locale for the translation
-     * @param string $value The translated value to store
+     *
+     * @param string      $key      The translation key
+     * @param string      $domain   The translation domain
+     * @param string      $locale   The locale for the translation
      * @param string|null $tenantId Optional tenant ID for multi-tenant systems
+     *
      * @return TranslationEntry The created translation entry
      */
     public function createFallbackEntry(
@@ -70,7 +73,7 @@ class TranslationManager
         string $translated,
         string $domain = 'messages',
         ?string $locale = null,
-        ?string $tenantId = null
+        ?string $tenantId = null,
     ): void {
         $entry = new TranslationEntry();
         $entry->setKey($key);

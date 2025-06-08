@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\LocalizationModule;
 
 use ApiPlatform\Metadata\ApiResource;
@@ -7,7 +9,6 @@ use App\Repository\LocalizationModule\TranslationEntryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
-use App\Entity\LocalizationModule\TranslationSourceEnum;
 use App\Contracts\BlameableInterface;
 use App\Contracts\TimestampableInterface;
 use App\Contracts\SoftDeletableInterface;

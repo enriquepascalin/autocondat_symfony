@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\WorkflowModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -11,8 +13,8 @@ enum RecurranceRuleFrequencyEnum: int implements TranslatableInterface
     case TASK_ASSIGNED = 1;  // Task assigned
     case RULE_TRIGGERED = 2; // Rule triggered
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('recurrance_rule_frequency.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('recurrance_rule_frequency.'.$this->name, [], 'enums', $locale);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\ProjectModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum DocumentCategoryEnum: int implements TranslatableInterface
     case DESIGN = 2;   // Design
     case OTHER = 3;    // Other
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('document_category.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('document_category.'.$this->name, [], 'enums', $locale);
     }
 }

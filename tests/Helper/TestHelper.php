@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Helper;
 
 use App\Entity\LocalizationModule\TranslationEntry;
 use App\Entity\LocalizationModule\TranslationSourceEnum;
 use App\Repository\LocalizationModule\TranslationEntryRepository;
 use App\Service\LocalizationModule\GoogleTranslateService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 
@@ -20,17 +21,19 @@ trait TestHelper
     {
         $repo = $this->createMock(TranslationEntryRepository::class);
         $repo->method('findByKeyAndLocale')
-             ->willReturnCallback(function($key, $locale, $domain, $tenantId = null) use ($entries) {
+             ->willReturnCallback(function ($key, $locale, $domain, $tenantId = null) use ($entries) {
                  foreach ($entries as $entry) {
-                     $matchesTenant = $tenantId === null 
-                         ? ($entry->getTenantId() === null) 
+                     $matchesTenant = null === $tenantId
+                         ? (null === $entry->getTenantId())
                          : ($entry->getTenantId() === $tenantId);
                      if ($entry->getKey() === $key && $entry->getLocale() === $locale && $entry->getDomain() === $domain && $matchesTenant) {
                          return $entry;
                      }
                  }
+
                  return null;
              });
+
         return $repo;
     }
 
@@ -42,7 +45,8 @@ trait TestHelper
     {
         $cache = $this->createMock(CacheInterface::class);
         $cache->method('get')
-              ->willReturnCallback(fn($key, $callback) => $callback($this->createStub(ItemInterface::class)));
+              ->willReturnCallback(fn ($key, $callback) => $callback($this->createStub(ItemInterface::class)));
+
         return $cache;
     }
 
@@ -53,6 +57,7 @@ trait TestHelper
     {
         $service = $this->createMock(GoogleTranslateService::class);
         $service->method('translate')->willReturn($translatedText);
+
         return $service;
     }
 
@@ -67,6 +72,7 @@ trait TestHelper
         $entry->setLocale('es');
         $entry->setDomain('messages');
         $entry->setSource(TranslationSourceEnum::MANUAL);
+
         // If tenantId property exists via TenantAwareTrait, leave as null for sample
         return $entry;
     }

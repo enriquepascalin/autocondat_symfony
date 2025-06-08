@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum MarketplaceItemTypeEnum: int implements TranslatableInterface
     case BUNDLE = 2;       // Bundle
     case SUBSCRIPTION = 3; // Subscription
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('marketplace_item_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('marketplace_item_type.'.$this->name, [], 'enums', $locale);
     }
 }

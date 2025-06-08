@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\LocalizationModule;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -9,22 +11,21 @@ class GoogleTranslateService implements AutoTranslatorInterface
 {
     /**
      * GoogleTranslateService constructor.
-     *
-     * @param HttpClientInterface $httpClient
-     * @param string $apiKey
      */
     public function __construct(
         private HttpClientInterface $httpClient,
-        private string $apiKey
-    ) {}
+        private string $apiKey,
+    ) {
+    }
 
     /**
      * Translate a given text from source language to target language using Google Translate API.
-     * 
-     * @param string $text The text to translate.
+     *
+     * @param string $text       the text to translate
      * @param string $sourceLang The language code of the source language (e.g., 'en', 'fr').
      * @param string $targetLang The language code of the target language (e.g., 'en', 'fr').
-     * @return string The translated text.
+     *
+     * @return string the translated text
      */
     public function translate(string $text, string $sourceLang, string $targetLang): string
     {

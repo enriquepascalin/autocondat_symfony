@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -15,8 +17,8 @@ enum PricingModelEnum: int implements TranslatableInterface
     case PAY_AS_YOU_GO = 5;  // Pay as you go
     case CUSTOM = 6;         // Custom
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('pricing_model.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('pricing_model.'.$this->name, [], 'enums', $locale);
     }
 }

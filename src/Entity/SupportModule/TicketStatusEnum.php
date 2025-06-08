@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SupportModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -22,8 +24,8 @@ enum TicketStatusEnum: int implements TranslatableInterface
     case UNDER_REVIEW = 12;         // Under review
     case IN_REVIEW = 13;            // In review
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('ticket_status.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('ticket_status.'.$this->name, [], 'enums', $locale);
     }
 }

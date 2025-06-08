@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SupportModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -47,14 +49,14 @@ enum IncidenceTypeEnum: int implements TranslatableInterface
     case SERVICE_FEEDBACK = 37;            // Service feedback
     case SERVICE_COMPLAINT = 38;           // Service complaint
     case SERVICE_REQUEST_FULFILLMENT = 39; // Service request fulfillment
-    case SERVICE_REQUEST_CANCELLATION = 40;// Service request cancellation
-    case SERVICE_REQUEST_MODIFICATION = 41;// Service request modification
-    case SERVICE_REQUEST_STATUS_UPDATE = 42;// Service request status update
+    case SERVICE_REQUEST_CANCELLATION = 40; // Service request cancellation
+    case SERVICE_REQUEST_MODIFICATION = 41; // Service request modification
+    case SERVICE_REQUEST_STATUS_UPDATE = 42; // Service request status update
     case SERVICE_REQUEST_ESCALATION = 43;  // Service request escalation
     case SERVICE_REQUEST_RESOLUTION = 44;  // Service request resolution
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('incidence_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('incidence_type.'.$this->name, [], 'enums', $locale);
     }
 }

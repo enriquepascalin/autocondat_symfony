@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\LocalizationModule;
 
 use App\Service\LocalizationModule\TranslationResolverService;
@@ -61,7 +63,7 @@ class TranslationResolverServiceTest extends TestCase
         $resolver = new TranslationResolverService($translatorStub, $managerMock, $googleMock);
         $result = $resolver->trans($key, [], $domain, $locale);
 
-        $this->assertSame($suggestedTranslation, $result, "Should return Google-translated text and create a fallback entry when translator has no translation.");
+        $this->assertSame($suggestedTranslation, $result, 'Should return Google-translated text and create a fallback entry when translator has no translation.');
     }
 
     public function testTransThrowsExceptionWhenTranslationFails(): void
@@ -74,7 +76,7 @@ class TranslationResolverServiceTest extends TestCase
         $translatorStub->method('trans')->willReturn($key);
 
         $googleMock = $this->createMock(GoogleTranslateService::class);
-        $googleMock->method('translate')->willThrowException(new \RuntimeException("API failure"));
+        $googleMock->method('translate')->willThrowException(new \RuntimeException('API failure'));
 
         $managerMock = $this->createMock(TranslationManager::class);
         $managerMock->expects($this->never())->method('createFallbackEntry');

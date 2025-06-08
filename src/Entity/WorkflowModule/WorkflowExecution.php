@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\WorkflowModule;
 
 use ApiPlatform\Metadata\ApiResource;
@@ -186,12 +188,12 @@ class WorkflowExecution
     public function setProjectPhase(?ProjectPhase $projectPhase): static
     {
         // unset the owning side of the relation if necessary
-        if ($projectPhase === null && $this->projectPhase !== null) {
+        if (null === $projectPhase && null !== $this->projectPhase) {
             $this->projectPhase->setWorkflowExecution(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($projectPhase !== null && $projectPhase->getWorkflowExecution() !== $this) {
+        if (null !== $projectPhase && $projectPhase->getWorkflowExecution() !== $this) {
             $projectPhase->setWorkflowExecution($this);
         }
 

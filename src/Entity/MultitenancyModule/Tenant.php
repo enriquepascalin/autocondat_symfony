@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\MultitenancyModule;
 
 use ApiPlatform\Metadata\ApiResource;
@@ -141,7 +143,6 @@ class Tenant
      */
     #[ORM\OneToMany(targetEntity: MarketplaceTransaction::class, mappedBy: 'subscriptor', orphanRemoval: true)]
     private Collection $marketplaceTransactions;
-
 
     public function __construct()
     {

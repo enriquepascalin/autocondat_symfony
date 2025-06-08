@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum SubscriptionStatusEnum: int implements TranslatableInterface
     case SUSPENDED = 2;  // Suspended
     case CANCELLED = 3;  // Cancelled
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('subscription_status.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('subscription_status.'.$this->name, [], 'enums', $locale);
     }
 }

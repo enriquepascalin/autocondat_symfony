@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +25,7 @@ trait BlameableTrait
     public function setCreatedBy(?User $user): self
     {
         $this->createdBy = $user;
+
         return $this;
     }
 
@@ -34,6 +37,7 @@ trait BlameableTrait
     public function setUpdatedBy(?User $user): self
     {
         $this->updatedBy = $user;
+
         return $this;
     }
 }

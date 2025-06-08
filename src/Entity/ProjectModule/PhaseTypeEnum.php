@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\ProjectModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum PhaseTypeEnum: int implements TranslatableInterface
     case TASK_GROUP = 2;  // Task group
     case DELIVERABLE = 3; // Deliverable
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('phase_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('phase_type.'.$this->name, [], 'enums', $locale);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\EventListener;
 
 use App\EventListener\LocaleListener;
@@ -64,7 +66,7 @@ class LocaleListenerTest extends TestCase
 
         $listener->onKernelRequest($eventStub);
 
-        $this->assertSame('it', $request->getLocale(), "Request locale should match the query parameter when no user is set.");
+        $this->assertSame('it', $request->getLocale(), 'Request locale should match the query parameter when no user is set.');
     }
 
     public function testDefaultLocaleUsedWhenNoUserAndNoParam(): void

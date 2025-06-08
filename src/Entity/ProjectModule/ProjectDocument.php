@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\ProjectModule;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\MultitenancyModule\Tenant;
-use App\Entity\ProjectModule\DocumentCategoryEnum;
-use App\Entity\ProjectModule\Project;
 use App\Entity\StorageManagementModule\Document;
 use App\Repository\ProjectDocumentRepository;
 use Doctrine\ORM\Mapping as ORM;

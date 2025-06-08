@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\SubscriptionModule;
 
 use ApiPlatform\Metadata\ApiResource;
@@ -8,10 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
-use App\Contracts\BlameableInterface;
-use App\Contracts\TimestampableInterface;
-use App\Contracts\SoftDeletableInterface;
-use App\Contracts\TenantAwareInterface;
 use App\Traits\BlameableTrait;
 use App\Traits\TimestampableTrait;
 use App\Traits\SoftDeletableTrait;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Service\LocalizationModule;
 
 use App\Entity\LocalizationModule\TranslationEntry;
@@ -32,7 +34,7 @@ class TranslationManagerTest extends TestCase
         $result = $manager->getTranslation($entry->getKey(), $entry->getDomain(), $entry->getLocale(), fallbackText: null);
 
         // Assert
-        $this->assertSame($expectedValue, $result, "Should return the value from existing TranslationEntry.");
+        $this->assertSame($expectedValue, $result, 'Should return the value from existing TranslationEntry.');
     }
 
     public function testReturnsKeyIfTranslationNotFoundAndNoFallbackProvided(): void
@@ -57,7 +59,7 @@ class TranslationManagerTest extends TestCase
         $result = $manager->getTranslation($missingKey, $domain, $locale, fallbackText: null);
 
         // Assert
-        $this->assertSame($missingKey, $result, "Should return the key itself when no translation and no fallback text are available.");
+        $this->assertSame($missingKey, $result, 'Should return the key itself when no translation and no fallback text are available.');
     }
 
     public function testAutoTranslatesAndPersistsNewEntryWhenNotFound(): void
@@ -81,15 +83,16 @@ class TranslationManagerTest extends TestCase
         // Expect a new TranslationEntry to be persisted and flushed
         $entityManager->expects($this->once())
                       ->method('persist')
-                      ->with($this->callback(function($entity) use ($fallbackText, $translatedText, $locale, $domain) {
+                      ->with($this->callback(function ($entity) use ($fallbackText, $translatedText, $locale, $domain) {
                           $this->assertInstanceOf(TranslationEntry::class, $entity);
-                          /** @var TranslationEntry $entity */
-                          $this->assertSame($fallbackText, $entity->getKey(), "Persisted entry key should match fallback text key.");
-                          $this->assertSame($locale, $entity->getLocale(), "Persisted entry locale should match target locale.");
-                          $this->assertSame($domain, $entity->getDomain(), "Persisted entry domain should match.");
-                          $this->assertSame($translatedText, $entity->getValue(), "Persisted entry value should match translated text.");
+                          /* @var TranslationEntry $entity */
+                          $this->assertSame($fallbackText, $entity->getKey(), 'Persisted entry key should match fallback text key.');
+                          $this->assertSame($locale, $entity->getLocale(), 'Persisted entry locale should match target locale.');
+                          $this->assertSame($domain, $entity->getDomain(), 'Persisted entry domain should match.');
+                          $this->assertSame($translatedText, $entity->getValue(), 'Persisted entry value should match translated text.');
                           $source = $entity->getSource();
-                          $this->assertTrue($source === \App\Entity\LocalizationModule\TranslationSourceEnum::AUTO || (string)$source === 'AUTO', "Source should be marked as AUTO.");
+                          $this->assertTrue(\App\Entity\LocalizationModule\TranslationSourceEnum::AUTO === $source || 'AUTO' === (string) $source, 'Source should be marked as AUTO.');
+
                           return true;
                       }));
         $entityManager->expects($this->once())->method('flush');
@@ -100,7 +103,7 @@ class TranslationManagerTest extends TestCase
         $result = $manager->getTranslation('hello_world', $domain, $locale, $fallbackText);
 
         // Assert
-        $this->assertSame($translatedText, $result, "Should return the translated text for a missing translation.");
+        $this->assertSame($translatedText, $result, 'Should return the translated text for a missing translation.');
     }
 
     public function testUsesTenantSpecificTranslationIfAvailable(): void
@@ -132,7 +135,7 @@ class TranslationManagerTest extends TestCase
         $result = $manager->getTranslation($key, $domain, $locale, fallbackText: null, tenantId: $tenantId);
 
         // Assert
-        $this->assertSame($tenantEntry->getValue(), $result, "Should return tenant-specific translation when available.");
+        $this->assertSame($tenantEntry->getValue(), $result, 'Should return tenant-specific translation when available.');
     }
 
     public function testCreatesTenantSpecificEntryWhenGlobalExistsButNoTenantOverride(): void
@@ -156,8 +159,8 @@ class TranslationManagerTest extends TestCase
         // Expect a new tenant-specific entry to be persisted and flushed
         $entityManager->expects($this->once())
                       ->method('persist')
-                      ->with($this->callback(function($entity) use ($globalEntry, $tenantId, $autoTranslated) {
-                          /** @var TranslationEntry $entity */
+                      ->with($this->callback(function ($entity) use ($globalEntry, $tenantId, $autoTranslated) {
+                          /* @var TranslationEntry $entity */
                           return $entity instanceof TranslationEntry
                               && $entity->getKey() === $globalEntry->getKey()
                               && $entity->getLocale() === $globalEntry->getLocale()
@@ -173,7 +176,7 @@ class TranslationManagerTest extends TestCase
         $result = $manager->getTranslation($globalEntry->getKey(), $globalEntry->getDomain(), $globalEntry->getLocale(), $fallbackOriginal, $tenantId);
 
         // Assert
-        $this->assertSame($autoTranslated, $result, "Should auto-translate and save a tenant-specific entry when no tenant override exists.");
+        $this->assertSame($autoTranslated, $result, 'Should auto-translate and save a tenant-specific entry when no tenant override exists.');
     }
 
     public function testCreateFallbackEntryPersistsTranslation(): void
@@ -190,5 +193,4 @@ class TranslationManagerTest extends TestCase
 
         $manager->createFallbackEntry('greeting', 'Hola', 'messages', 'es', 'tenant1');
     }
-
 }

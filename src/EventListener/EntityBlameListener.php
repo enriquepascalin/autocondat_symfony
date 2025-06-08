@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -10,9 +12,9 @@ use App\Entity\AuthenticationModule\User;
 class EntityBlameListener
 {
     public function __construct(
-        private Security $security
-    )
-    {}
+        private Security $security,
+    ) {
+    }
 
     public function prePersist(LifecycleEventArgs $args): void
     {
@@ -20,11 +22,11 @@ class EntityBlameListener
         $user = $this->security->getUser();
 
         if ($entity instanceof BlameableInterface && $user instanceof User) {
-            if ($entity->getCreatedBy() === null) {
+            if (null === $entity->getCreatedBy()) {
                 $entity->setCreatedBy($user);
                 $entity->setUpdatedBy($user);
             }
-            
+
         }
     }
 

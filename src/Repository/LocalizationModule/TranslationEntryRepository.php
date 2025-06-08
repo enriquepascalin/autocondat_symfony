@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\LocalizationModule;
 
 use App\Entity\LocalizationModule\TranslationEntry;
@@ -28,7 +30,7 @@ class TranslationEntryRepository extends ServiceEntityRepository implements Tena
             'domain' => $domain,
         ];
 
-        if ($tenantId !== null) {
+        if (null !== $tenantId) {
             $criteria['tenantId'] = $tenantId;
         }
 

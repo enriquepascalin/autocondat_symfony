@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\WorkflowModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -11,8 +13,8 @@ enum ActorTypeEnum: int implements TranslatableInterface
     case SYSTEM = 1;  // System
     case API = 2;     // API
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('actor_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('actor_type.'.$this->name, [], 'enums', $locale);
     }
 }

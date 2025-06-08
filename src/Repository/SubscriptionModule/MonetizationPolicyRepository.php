@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\SubscriptionModule;
 
 use App\Entity\SubscriptionModule\MonetizationPolicy;

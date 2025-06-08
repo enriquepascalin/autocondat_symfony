@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\NotificationModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -12,8 +14,8 @@ enum NotificationTypeEnum: int implements TranslatableInterface
     case SYSTEM = 2;          // General system update.
     case ACTION_REQUIRED = 3; // User must take action (e.g., sign a doc).
 
-    public function trans(TranslatorInterface $translator, string $locale = null): string
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('notification_type.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('notification_type.'.$this->name, [], 'enums', $locale);
     }
 }

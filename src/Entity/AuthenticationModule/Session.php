@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\AuthenticationModule;
 
 use ApiPlatform\Metadata\ApiResource;
@@ -97,7 +99,7 @@ class Session
         }
         if (strlen($token) < 10) {
             throw new \InvalidArgumentException('Token length must be at least 10 characters.');
-        }   
+        }
         $this->token = $token;
 
         return $this;

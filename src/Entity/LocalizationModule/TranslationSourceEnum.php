@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\LocalizationModule;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -13,13 +15,9 @@ enum TranslationSourceEnum: int implements TranslatableInterface
 
     /**
      * Returns the translated string for the current translation source.
-     *
-     * @param TranslatorInterface $translator
-     * @param string|null $locale
-     * @return string
      */
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('translation_source.' . $this->name, [], 'enums', $locale);
+        return $translator->trans('translation_source.'.$this->name, [], 'enums', $locale);
     }
 }
