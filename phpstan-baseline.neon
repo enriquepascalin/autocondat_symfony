@@ -1,0 +1,1147 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Contracts\\TenantAwareRepositoryInterface\:\:findByTenant\(\) has parameter \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Contracts/TenantAwareRepositoryInterface.php
+
+		-
+			message: '#^Method App\\Contracts\\TenantAwareRepositoryInterface\:\:findByTenant\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Contracts/TenantAwareRepositoryInterface.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\ConsentLog\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/AuthenticationModule/ConsentLog.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\Permission\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/AuthenticationModule/Permission.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\Role\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/AuthenticationModule/Role.php
+
+		-
+			message: '#^Call to method encodePassword\(\) on an unknown class Symfony\\Component\\Security\\Core\\Encoder\\SodiumPasswordEncoder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Entity/AuthenticationModule/Session.php
+
+		-
+			message: '#^Comparison operation "\<" between int\<10, 255\> and 10 is always false\.$#'
+			identifier: smaller.alwaysFalse
+			count: 1
+			path: src/Entity/AuthenticationModule/Session.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<10, 255\> and 255 is always false\.$#'
+			identifier: greater.alwaysFalse
+			count: 1
+			path: src/Entity/AuthenticationModule/Session.php
+
+		-
+			message: '#^Instantiated class Symfony\\Component\\Security\\Core\\Encoder\\SodiumPasswordEncoder not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Entity/AuthenticationModule/Session.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\Session\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/AuthenticationModule/Session.php
+
+		-
+			message: '#^Doctrine\\Common\\Collections\\Collection\<int, App\\Entity\\AuthenticationModule\\Role\> does not accept string\.$#'
+			identifier: offsetAssign.valueType
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Method App\\Entity\\AuthenticationModule\\User\:\:getMfaBackupCodes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Method App\\Entity\\AuthenticationModule\\User\:\:getRoles\(\) should return array\<string\> but returns array\<int, App\\Entity\\AuthenticationModule\\Role\>\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Method App\\Entity\\AuthenticationModule\\User\:\:getUserIdentifier\(\) should return non\-empty\-string but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Method App\\Entity\\AuthenticationModule\\User\:\:setMfaBackupCodes\(\) has parameter \$mfaBackupCodes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_unique expects array, Doctrine\\Common\\Collections\\Collection\<int, App\\Entity\\AuthenticationModule\\Role\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\User\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\User\:\:\$mfaBackupCodes type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Property App\\Entity\\AuthenticationModule\\User\:\:\$roles \(Doctrine\\Common\\Collections\\Collection\<int, App\\Entity\\AuthenticationModule\\Role\>\) does not accept list\<string\>\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Entity/AuthenticationModule/User.php
+
+		-
+			message: '#^Property App\\Entity\\LocalizationModule\\TranslationEntry\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LocalizationModule/TranslationEntry.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\Segment\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/MultitenancyModule/Segment.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\Tenant\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/MultitenancyModule/Tenant.php
+
+		-
+			message: '#^Method App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:getNewValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Method App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:getOldValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Method App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:setNewValue\(\) has parameter \$newValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Method App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:setOldValue\(\) has parameter \$oldValue with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:\$newValue type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\TenantAuditLog\:\:\$oldValue type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantAuditLog.php
+
+		-
+			message: '#^Method App\\Entity\\MultitenancyModule\\TenantConfig\:\:getValue\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantConfig.php
+
+		-
+			message: '#^Method App\\Entity\\MultitenancyModule\\TenantConfig\:\:setValue\(\) has parameter \$value with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantConfig.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\TenantConfig\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantConfig.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\TenantConfig\:\:\$value type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantConfig.php
+
+		-
+			message: '#^Property App\\Entity\\MultitenancyModule\\TenantUsers\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/MultitenancyModule/TenantUsers.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/NotificationModule/AckActionEnum.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\Acknowledgement\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/NotificationModule/Acknowledgement.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\Audience\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/NotificationModule/Audience.php
+
+		-
+			message: '#^Method App\\Entity\\NotificationModule\\Channel\:\:getConfig\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/NotificationModule/Channel.php
+
+		-
+			message: '#^Method App\\Entity\\NotificationModule\\Channel\:\:setConfig\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/NotificationModule/Channel.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\Channel\:\:\$config type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/NotificationModule/Channel.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\Channel\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/NotificationModule/Channel.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/NotificationModule/ChannelTypeEnum.php
+
+		-
+			message: '#^Method App\\Entity\\NotificationModule\\DeliveryRule\:\:getRetryPolicy\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/NotificationModule/DeliveryRule.php
+
+		-
+			message: '#^Method App\\Entity\\NotificationModule\\DeliveryRule\:\:setRetryPolicy\(\) has parameter \$retryPolicy with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/NotificationModule/DeliveryRule.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\DeliveryRule\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/NotificationModule/DeliveryRule.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\DeliveryRule\:\:\$retryPolicy type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/NotificationModule/DeliveryRule.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/NotificationModule/DeliveryStatusEnum.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\Notification\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/NotificationModule/Notification.php
+
+		-
+			message: '#^Property App\\Entity\\NotificationModule\\NotificationLog\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/NotificationModule/NotificationLog.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/NotificationModule/NotificationStatusEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/NotificationModule/NotificationTypeEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/NotificationModule/ProviderEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/ProjectModule/AssignmentRoleEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/ProjectModule/DocumentCategoryEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/ProjectModule/PhaseStatusEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/ProjectModule/PhaseTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\ProjectModule\\Project\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/ProjectModule/Project.php
+
+		-
+			message: '#^Class App\\Repository\\ProjectDocumentRepository not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Entity/ProjectModule/ProjectDocument.php
+
+		-
+			message: '#^Parameter \$repositoryClass of attribute class Doctrine\\ORM\\Mapping\\Entity constructor expects class\-string\<Doctrine\\ORM\\EntityRepository\<T of object\>\>\|null, ''App\\\\Repository\\\\ProjectDocumentRepository'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/ProjectModule/ProjectDocument.php
+
+		-
+			message: '#^Property App\\Entity\\ProjectModule\\ProjectDocument\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/ProjectModule/ProjectDocument.php
+
+		-
+			message: '#^Property App\\Entity\\ProjectModule\\ProjectPhase\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/ProjectModule/ProjectPhase.php
+
+		-
+			message: '#^Property App\\Entity\\ProjectModule\\ProjectPhaseAssignment\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/ProjectModule/ProjectPhaseAssignment.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/ProjectModule/ProjectTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\StorageManagementModule\\Document\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/StorageManagementModule/Document.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/ApprovalStatusEnum.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Bundle\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/Bundle.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\BundleComponent\:\:getOverrides\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/BundleComponent.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\BundleComponent\:\:setOverrides\(\) has parameter \$overrides with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/BundleComponent.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\BundleComponent\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/BundleComponent.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\BundleComponent\:\:\$overrides type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/BundleComponent.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/BundleStatusEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/BundleTypeEnum.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\Feature\:\:getCommercialMetadata\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\Feature\:\:getTechnicalMetadata\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\Feature\:\:setCommercialMetadata\(\) has parameter \$commercialMetadata with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\Feature\:\:setTechnicalMetadata\(\) has parameter \$technicalMetadata with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Feature\:\:\$commercialMetadata type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Feature\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Feature\:\:\$technicalMetadata type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Feature.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/FeatureTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\License\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/License.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\MarketplaceItem\:\:getCompatibilityMatrix\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceItem.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\MarketplaceItem\:\:setCompatibilityMatrix\(\) has parameter \$compatibilityMatrix with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceItem.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MarketplaceItem\:\:\$compatibilityMatrix type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceItem.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MarketplaceItem\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceItem.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceItemTypeEnum.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\MarketplaceProfile\:\:getPaymentDetails\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceProfile.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\MarketplaceProfile\:\:setPaymentDetails\(\) has parameter \$paymentDetails with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceProfile.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MarketplaceProfile\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceProfile.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MarketplaceProfile\:\:\$paymentDetails type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceProfile.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MarketplaceTransaction\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/MarketplaceTransaction.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\MonetizationPolicy\:\:getPriceConfiguration\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MonetizationPolicy.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\MonetizationPolicy\:\:setPriceConfiguration\(\) has parameter \$priceConfiguration with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MonetizationPolicy.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MonetizationPolicy\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/MonetizationPolicy.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\MonetizationPolicy\:\:\$priceConfiguration type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/MonetizationPolicy.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/PricingModelEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/ProfileStatusEnum.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\Service\:\:getServiceLevels\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Service.php
+
+		-
+			message: '#^Method App\\Entity\\SubscriptionModule\\Service\:\:setServiceLevels\(\) has parameter \$serviceLevels with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Service.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Service\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/Service.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Service\:\:\$serviceLevels type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/SubscriptionModule/Service.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/ServiceTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\SettlementLedger\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/SettlementLedger.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/SettlementStatusEnum.php
+
+		-
+			message: '#^Property App\\Entity\\SubscriptionModule\\Subscription\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SubscriptionModule/Subscription.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/SubscriptionStatusEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SubscriptionModule/TransactionTypeEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SupportModule/IncidenceTypeEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SupportModule/SeverityEnum.php
+
+		-
+			message: '#^Property App\\Entity\\SupportModule\\Ticket\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SupportModule/Ticket.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/SupportModule/TicketStatusEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Actor\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Actor.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/ActorTypeEnum.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\BusinessRule\:\:getParameters\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/BusinessRule.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\BusinessRule\:\:setParameters\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/BusinessRule.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\BusinessRule\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/BusinessRule.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\BusinessRule\:\:\$parameters type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/BusinessRule.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/BusinessRuleTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Calendar\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Calendar.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\CalendarEvent\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/CalendarEvent.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/ConditionTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Deadline\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Deadline.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/DeadlineTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\EventType\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/EventType.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/HistoryLogEventTypeEnum.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\RecurranceRule\:\:getExcludedDates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/RecurranceRule.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\RecurranceRule\:\:setExcludedDates\(\) has parameter \$excludedDates with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/RecurranceRule.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\RecurranceRule\:\:\$excludedDates type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/RecurranceRule.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\RecurranceRule\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/RecurranceRule.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/RecurranceRuleFrequencyEnum.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\State\:\:getMetadata\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/State.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\State\:\:setMetadata\(\) has parameter \$metadata with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/State.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\State\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/State.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\State\:\:\$metadata type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/State.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/StateTypeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Task\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Task.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/TaskPriorityEnum.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/TaskStatusEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Transition\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Transition.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/TransitionConditionModeEnum.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Trigger\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Trigger.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/TriggerTypeEnum.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\Workflow\:\:getEntitlementRequirements\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/Workflow.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\Workflow\:\:setEntitlementRequirements\(\) has parameter \$entitlementRequirements with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/Workflow.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Workflow\:\:\$entitlementRequirements type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/Workflow.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\Workflow\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/Workflow.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\WorkflowExecution\:\:getContext\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/WorkflowExecution.php
+
+		-
+			message: '#^Method App\\Entity\\WorkflowModule\\WorkflowExecution\:\:setContext\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/WorkflowExecution.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\WorkflowExecution\:\:\$context type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/WorkflowModule/WorkflowExecution.php
+
+		-
+			message: '#^Property App\\Entity\\WorkflowModule\\WorkflowExecution\:\:\$id \(int\|null\) is never assigned int so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/WorkflowModule/WorkflowExecution.php
+
+		-
+			message: '#^Deprecated in PHP 8\.4\: Parameter \#2 \$locale \(string\) is implicitly nullable via default value null\.$#'
+			identifier: parameter.implicitlyNullable
+			count: 1
+			path: src/Entity/WorkflowModule/WorkflowExecutionStatusEnum.php
+
+		-
+			message: '#^Call to method getObject\(\) on an unknown class Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/EventListener/EntityBlameListener.php
+
+		-
+			message: '#^Parameter \$args of method App\\EventListener\\EntityBlameListener\:\:prePersist\(\) has invalid type Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/EntityBlameListener.php
+
+		-
+			message: '#^Parameter \$args of method App\\EventListener\\EntityBlameListener\:\:preUpdate\(\) has invalid type Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/EntityBlameListener.php
+
+		-
+			message: '#^Call to method getCreatedAt\(\) on an unknown class App\\Traits\\TimestampableInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Call to method getObject\(\) on an unknown class Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Call to method setCreatedAt\(\) on an unknown class App\\Traits\\TimestampableInterface\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Call to method setUpdatedAt\(\) on an unknown class App\\Traits\\TimestampableInterface\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Class App\\Traits\\TimestampableInterface not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Parameter \$args of method App\\EventListener\\EntityTimestampListener\:\:prePersist\(\) has invalid type Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Parameter \$args of method App\\EventListener\\EntityTimestampListener\:\:preUpdate\(\) has invalid type Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/EntityTimestampListener.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: src/EventListener/LocaleListener.php
+
+		-
+			message: '#^Property App\\EventListener\\LocaleListener\:\:\$requestStack is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/EventListener/LocaleListener.php
+
+		-
+			message: '#^Call to method getObject\(\) on an unknown class Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/EventListener/TenantAwareListener.php
+
+		-
+			message: '#^Parameter \$args of method App\\EventListener\\TenantAwareListener\:\:prePersist\(\) has invalid type Doctrine\\ORM\\Event\\LifecycleEventArgs\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/EventListener/TenantAwareListener.php
+
+		-
+			message: '#^Method App\\Repository\\LocalizationModule\\TranslationEntryRepository\:\:findByTenant\(\) has parameter \$criteria with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Repository/LocalizationModule/TranslationEntryRepository.php
+
+		-
+			message: '#^Method App\\Repository\\LocalizationModule\\TranslationEntryRepository\:\:findByTenant\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Repository/LocalizationModule/TranslationEntryRepository.php
+
+		-
+			message: '#^PHPDoc tag @param references unknown parameter\: \$value$#'
+			identifier: parameter.notFound
+			count: 1
+			path: src/Service/LocalizationModule/TranslationManager.php
+
+		-
+			message: '#^PHPDoc tag @return with type App\\Entity\\LocalizationModule\\TranslationEntry is incompatible with native type void\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Service/LocalizationModule/TranslationManager.php
+
+		-
+			message: '#^Method App\\Service\\LocalizationModule\\TranslationResolverService\:\:trans\(\) has parameter \$parameters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/LocalizationModule/TranslationResolverService.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\?string\|null \$domain Translation domain \(defaults to ''messages''\)\)\: Unexpected token "\|", expected variable at offset 192 on line 6$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Service/LocalizationModule/TranslationResolverService.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(\?string\|null \$locale Target locale \(null \= default locale\)\)\: Unexpected token "\|", expected variable at offset 271 on line 7$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Service/LocalizationModule/TranslationResolverService.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\LocalizationModule\\TranslationEntry\:\:getTenantId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Call to an undefined method App\\Service\\LocalizationModule\\GoogleTranslateService\:\:expects\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with true will always evaluate to true\.$#'
+			identifier: method.alreadyNarrowedType
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Call to method method\(\) on an unknown class App\\Tests\\Service\\LocalizationModule\\Tenant\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Cannot cast App\\Entity\\LocalizationModule\\TranslationSourceEnum\|null to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Class App\\Tests\\Service\\LocalizationModule\\AutoTranslatorInterface not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Class App\\Tests\\Service\\LocalizationModule\\CacheInterface not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Class App\\Tests\\Service\\LocalizationModule\\Tenant not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Class App\\Tests\\Service\\LocalizationModule\\TranslationEntryRepository not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Instanceof between App\\Entity\\LocalizationModule\\TranslationEntry and App\\Entity\\LocalizationModule\\TranslationEntry will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Method App\\Tests\\Service\\LocalizationModule\\TranslationManagerTest\:\:getMockTranslationEntryRepository\(\) has parameter \$entries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Parameter \#1 \$repository of class App\\Service\\LocalizationModule\\TranslationManager constructor expects App\\Repository\\LocalizationModule\\TranslationEntryRepository, App\\Tests\\Service\\LocalizationModule\\TranslationEntryRepository&PHPUnit\\Framework\\MockObject\\Stub given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Parameter \#1 \$tenant of method App\\Entity\\LocalizationModule\\TranslationEntry\:\:setTenant\(\) expects App\\Entity\\MultitenancyModule\\Tenant\|null, App\\Tests\\Service\\LocalizationModule\\Tenant&PHPUnit\\Framework\\MockObject\\MockObject given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between mixed and null will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Undefined variable\: \$entityManager$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Undefined variable\: \$entry$#'
+			identifier: variable.undefined
+			count: 4
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: '#^Call to an undefined method App\\Service\\LocalizationModule\\GoogleTranslateService&PHPUnit\\Framework\\MockObject\\Stub\:\:expects\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationResolverServiceTest.php
+
+		-
+			message: '#^Call to an undefined method PHPUnit\\Framework\\MockObject\\Builder\\InvocationStubber\:\:with\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationResolverServiceTest.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''Symfony\\\\Component\\\\Dotenv\\\\Dotenv'' and ''bootEnv'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/bootstrap.php
