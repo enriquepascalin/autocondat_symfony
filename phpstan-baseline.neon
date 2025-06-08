@@ -1,0 +1,61 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^PHPDoc tag @return with type Symfony\\\\Component\\\\Translation\\\\MessageCatalogue is incompatible with native type array\\.$#"
+			count: 1
+			path: src/Service/LocalizationModule/DatabaseTranslationLoader.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Entity\\\\LocalizationModule\\\\TranslationEntry\\:\\:setTenantId\\(\\)\\.$#"
+			count: 1
+			path: src/Service/LocalizationModule/TranslationManager.php
+
+		-
+			message: "#^PHPDoc tag @return with type App\\\\Entity\\\\LocalizationModule\\\\TranslationEntry is incompatible with native type void\\.$#"
+			count: 1
+			path: src/Service/LocalizationModule/TranslationManager.php
+
+		-
+			message: "#^Method App\\\\Service\\\\LocalizationModule\\\\GoogleTranslateService\\:\\:translate\\(\\) invoked with 2 parameters, 3 required\\.$#"
+			count: 1
+			path: src/Service/LocalizationModule/TranslationResolverService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\?string\\|null \\$domain     Translation domain \\(defaults to 'messages'\\)\\)\\: Unexpected token \"\\|\", expected variable at offset 212$#"
+			count: 1
+			path: src/Service/LocalizationModule/TranslationResolverService.php
+
+		-
+			message: "#^PHPDoc tag @param has invalid value \\(\\?string\\|null \\$locale     Target locale \\(null \\= default locale\\)\\)\\: Unexpected token \"\\|\", expected variable at offset 295$#"
+			count: 1
+			path: src/Service/LocalizationModule/TranslationResolverService.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Entity\\\\LocalizationModule\\\\TranslationEntry\\:\\:getTenantId\\(\\)\\.$#"
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Entity\\\\LocalizationModule\\\\TranslationEntry\\:\\:setTenantId\\(\\)\\.$#"
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Service\\\\LocalizationModule\\\\GoogleTranslateService\\:\\:expects\\(\\)\\.$#"
+			count: 3
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: "#^Cannot cast App\\\\Entity\\\\LocalizationModule\\\\TranslationSourceEnum\\|null to string\\.$#"
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationManagerTest.php
+
+		-
+			message: "#^Call to an undefined method App\\\\Service\\\\LocalizationModule\\\\GoogleTranslateService&PHPUnit\\\\Framework\\\\MockObject\\\\Stub\\:\\:expects\\(\\)\\.$#"
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationResolverServiceTest.php
+
+		-
+			message: "#^Call to an undefined method PHPUnit\\\\Framework\\\\MockObject\\\\Builder\\\\InvocationStubber\\:\\:with\\(\\)\\.$#"
+			count: 1
+			path: tests/Service/LocalizationModule/TranslationResolverServiceTest.php

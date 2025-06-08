@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use App\Traits\TimestampableInterface;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use App\Contracts\TimestampableInterface;
 
 class EntityTimestampListener
 {
-    public function prePersist(LifecycleEventArgs $args): void
+    public function prePersist(PrePersistEventArgs $args): void
     {
         $entity = $args->getObject();
 
@@ -19,7 +20,7 @@ class EntityTimestampListener
         }
     }
 
-    public function preUpdate(LifecycleEventArgs $args): void
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
 

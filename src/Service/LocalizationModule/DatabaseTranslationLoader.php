@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\LocalizationModule;
 
+use App\Entity\MultitenancyModule\Tenant;
+use App\Service\TenantContext;
 use App\Repository\LocalizationModule\TranslationEntryRepository;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\MessageCatalogue;
@@ -14,7 +16,8 @@ class DatabaseTranslationLoader implements LoaderInterface
      * DatabaseTranslationLoader constructor.
      */
     public function __construct(
-        private readonly TranslationEntryRepository $repository,
+        private readonly TranslationEntryRepository $translationEntryRepository,
+        private readonly TenantContext $tenantContext
     ) {
     }
 

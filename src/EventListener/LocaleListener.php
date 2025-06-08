@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use App\Entity\User;
+use App\Entity\AuthenticationModule\User;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;

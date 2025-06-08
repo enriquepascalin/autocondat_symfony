@@ -71,8 +71,7 @@ class Session
 
     public function setToken(string $token): static
     {
-        $encoder = new \Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder();
-        $token = $encoder->encodePassword($token, null);
+        /** @ToDo Encode Hash token */
         if (strlen($token) > 255) {
             throw new \InvalidArgumentException('Token length exceeds maximum allowed length of 255 characters.');
         }

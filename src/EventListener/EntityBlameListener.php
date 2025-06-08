@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Contracts\BlameableInterface;
 use App\Entity\AuthenticationModule\User;
@@ -16,7 +17,7 @@ class EntityBlameListener
     ) {
     }
 
-    public function prePersist(LifecycleEventArgs $args): void
+    public function prePersist(PrePersistEventArgs $args): void
     {
         $entity = $args->getObject();
         $user = $this->security->getUser();
@@ -30,7 +31,7 @@ class EntityBlameListener
         }
     }
 
-    public function preUpdate(LifecycleEventArgs $args): void
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
         $user = $this->security->getUser();

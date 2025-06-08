@@ -7,7 +7,7 @@ namespace App\Entity\ProjectModule;
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\MultitenancyModule\Tenant;
 use App\Entity\StorageManagementModule\Document;
-use App\Repository\ProjectDocumentRepository;
+use App\Repository\ProjectModule\ProjectDocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 

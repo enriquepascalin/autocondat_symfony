@@ -104,12 +104,12 @@ class TranslationEntry implements TimestampableInterface, SoftDeletableInterface
         return $this;
     }
 
-    public function getSource(): ?TrabslationSourceEnum
+    public function getSource(): ?TranslationSourceEnum
     {
         return $this->source;
     }
 
-    public function setSource(?TrabslationSourceEnum $source): static
+    public function setSource(?TranslationSourceEnum $source): static
     {
         $this->source = $source;
 

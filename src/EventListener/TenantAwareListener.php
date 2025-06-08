@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use App\Service\TenantContext;
 use App\Contracts\TenantAwareInterface;
 
@@ -23,9 +23,9 @@ class TenantAwareListener
     /**
      * Handle pre-persist lifecycle event.
      *
-     * @param LifecycleEventArgs $args Doctrine lifecycle event arguments
+     * @param PrePersistEventArgs $args Doctrine lifecycle event arguments
      */
-    public function prePersist(LifecycleEventArgs $args): void
+    public function prePersist(PrePersistEventArgs $args): void
     {
         $entity = $args->getObject();
         if (!$entity instanceof TenantAwareInterface
