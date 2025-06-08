@@ -21,3 +21,4 @@ enum TranslationSourceEnum: int implements TranslatableInterface
         return $translator->trans('translation_source.'.$this->name, [], 'enums', $locale);
     }
 }
+
