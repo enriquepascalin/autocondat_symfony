@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\AuthenticationModule;
 
 use App\Entity\MultitenancyModule\Segment;
+use App\Entity\AuthenticationModule\RolesEnum;
 use App\Entity\NotificationModule\Audience;
 use App\Entity\ProjectModule\ProjectPhase;
 use App\Entity\ProjectModule\ProjectPhaseAssignment;
@@ -14,6 +15,7 @@ use App\Repository\AuthenticationModule\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Contracts\BlameableInterface;
@@ -28,6 +30,7 @@ use App\Traits\TenantAwareTrait;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, TimestampableInterface, SoftDeletableInterface, TenantAwareInterface, BlameableInterface
 {
     use TimestampableTrait;
@@ -48,9 +51,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * @var string|null The email address of the user
+     */
     #[ORM\Column(length: 180)]
     private ?string $email = null;
-
 
     /**
      * @var string The hashed password
@@ -71,10 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     private Collection $consentLogs;
 
     /**
-     * @var Collection<int, Role>
+     * @var array<string>
      */
-    #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'users')]
-    private Collection $roles;
+      #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+    /**
+     * @var RolesEnum|null 
+     */
+    #[ORM\Column(enumType: RolesEnum::class)]
+    private ?RolesEnum $role = null;
 
     /**
      * @var Collection<int, Segment>
@@ -130,11 +141,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $locale = null;
 
+    #[ORM\Column]
+    private bool $isVerified = false;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
         $this->consentLogs = new ArrayCollection();
-        $this->roles = new ArrayCollection();
         $this->segments = new ArrayCollection();
         $this->asignedProjectPhases = new ArrayCollection();
         $this->projectPhaseAssignments = new ArrayCollection();
@@ -528,6 +541,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     public function setLocale(?string $locale): static
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+        public function getRole(): ?RolesEnum
+    {
+        if ($this->role === null) {
+            $this->role = RolesEnum::USER;
+        }
+        return $this->role;
+    }
+
+    public function setRole(RolesEnum $role): static
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

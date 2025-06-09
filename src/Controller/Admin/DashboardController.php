@@ -7,6 +7,8 @@ namespace App\Controller\Admin;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use Symfony\Component\Security\Core\User\UserInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,27 +17,7 @@ class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-        return parent::index();
-
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // 1.1) If you have enabled the "pretty URLs" feature:
-        // return $this->redirectToRoute('admin_user_index');
-        //
-        // 1.2) Same example but using the "ugly URLs" that were used in previous EasyAdmin versions:
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirectToRoute('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
+        return $this->render('admin/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -47,6 +29,50 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+
+        yield MenuItem::section('Authentication');
+        yield MenuItem::linkToCrud('Users', 'fas fa-users', \App\Entity\AuthenticationModule\User::class);
+        yield MenuItem::linkToCrud('Roles', 'fas fa-user-tag', \App\Entity\AuthenticationModule\Role::class);
+        yield MenuItem::linkToCrud('Permission', 'fas fa-building', \App\Entity\AuthenticationModule\Permission::class);
+        yield MenuItem::linkToCrud('ConsentLog', 'fas fa-users-cog', \App\Entity\AuthenticationModule\ConsentLog::class);
+        yield MenuItem::linkToCrud('Sessions', 'fas fa-user-check', \App\Entity\AuthenticationModule\Session::class);
+
+        yield MenuItem::section('Multitenancy');
+        yield MenuItem::linkToCrud('Tenants', 'fas fa-building', \App\Entity\MultitenancyModule\Tenant::class);
+        yield MenuItem::linkToCrud('Segments', 'fas fa-building', \App\Entity\MultitenancyModule\Segment::class);
+        yield MenuItem::linkToCrud('TenantAuditLogs', 'fas fa-building', \App\Entity\MultitenancyModule\TenantAuditLog::class);
+        yield MenuItem::linkToCrud('TenantConfig', 'fas fa-building', \App\Entity\MultitenancyModule\TenantConfig::class);
+        yield MenuItem::linkToCrud('Tenant Users', 'fas fa-users', \App\Entity\MultitenancyModule\TenantUsers::class);
+
+        yield MenuItem::section('');
+        yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        // Usually it's better to call the parent method because that gives you a
+        // user menu with some menu items already created ("sign out", "exit impersonation", etc.)
+        // if you prefer to create the user menu from scratch, use: return UserMenu::new()->...
+        return parent::configureUserMenu($user)
+            // use the given $user object to get the user name
+            ->setName($user->getFullName())
+            // use this method if you don't want to display the name of the user
+            ->displayUserName(false)
+
+            // you can return an URL with the avatar image
+            ->setAvatarUrl('https://uxwing.com/avatar-icon/')
+            //->setAvatarUrl($user->getProfileImageUrl())
+            // use this method if you don't want to display the user image
+            //->displayUserAvatar(false)
+            // you can also pass an email address to use gravatar's service
+            ->setGravatarEmail($user->getEmail())
+
+            // you can use any type of menu item, except submenus
+            ->addMenuItems([
+                MenuItem::linkToRoute('My Profile', 'fa fa-id-card', '...', ['...' => '...']),
+                MenuItem::linkToRoute('Settings', 'fa fa-user-cog', '...', ['...' => '...']),
+                MenuItem::section(),
+                MenuItem::linkToLogout('Logout', 'fa fa-sign-out'),
+            ]);
     }
 }

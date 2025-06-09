@@ -1,0 +1,5 @@
+controllers:
+    resource:
+        path: ../../src/Controller/AuthenticationModule
+        namespace: App\Controller\AuthenticationModule
+    type: attribute
