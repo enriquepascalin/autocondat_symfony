@@ -28,21 +28,21 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToDashboard('admin.tab.dashboard', 'fa fa-home');
 
-        yield MenuItem::section('Authentication');
-        yield MenuItem::linkToCrud('Users', 'fas fa-users', \App\Entity\AuthenticationModule\User::class);
-        yield MenuItem::linkToCrud('Roles', 'fas fa-user-tag', \App\Entity\AuthenticationModule\Role::class);
-        yield MenuItem::linkToCrud('Permission', 'fas fa-building', \App\Entity\AuthenticationModule\Permission::class);
-        yield MenuItem::linkToCrud('ConsentLog', 'fas fa-users-cog', \App\Entity\AuthenticationModule\ConsentLog::class);
-        yield MenuItem::linkToCrud('Sessions', 'fas fa-user-check', \App\Entity\AuthenticationModule\Session::class);
+        yield MenuItem::section('admin.tab.authentication');
+        yield MenuItem::linkToCrud('admin.tab.users', 'fas fa-users', \App\Entity\AuthenticationModule\User::class);
+        yield MenuItem::linkToCrud('admin.tab.roles', 'fas fa-user-tag', \App\Entity\AuthenticationModule\Role::class);
+        yield MenuItem::linkToCrud('admin.tab.permissions', 'fas fa-building', \App\Entity\AuthenticationModule\Permission::class);
+        yield MenuItem::linkToCrud('admin.tab.consentlog', 'fas fa-users-cog', \App\Entity\AuthenticationModule\ConsentLog::class);
+        yield MenuItem::linkToCrud('admin.tab.sessions', 'fas fa-user-check', \App\Entity\AuthenticationModule\Session::class);
 
-        yield MenuItem::section('Multitenancy');
-        yield MenuItem::linkToCrud('Tenants', 'fas fa-building', \App\Entity\MultitenancyModule\Tenant::class);
-        yield MenuItem::linkToCrud('Segments', 'fas fa-building', \App\Entity\MultitenancyModule\Segment::class);
-        yield MenuItem::linkToCrud('TenantAuditLogs', 'fas fa-building', \App\Entity\MultitenancyModule\TenantAuditLog::class);
-        yield MenuItem::linkToCrud('TenantConfig', 'fas fa-building', \App\Entity\MultitenancyModule\TenantConfig::class);
-        yield MenuItem::linkToCrud('Tenant Users', 'fas fa-users', \App\Entity\MultitenancyModule\TenantUsers::class);
+        yield MenuItem::section('admin.tab.multitenancy');
+        yield MenuItem::linkToCrud('admin.tab.tenants', 'fas fa-building', \App\Entity\MultitenancyModule\Tenant::class);
+        yield MenuItem::linkToCrud('admin.tab.segments', 'fas fa-building', \App\Entity\MultitenancyModule\Segment::class);
+        yield MenuItem::linkToCrud('admin.tab.tenantauditlogs', 'fas fa-building', \App\Entity\MultitenancyModule\TenantAuditLog::class);
+        yield MenuItem::linkToCrud('admin.tab.tenantconfig', 'fas fa-building', \App\Entity\MultitenancyModule\TenantConfig::class);
+        yield MenuItem::linkToCrud('admin.tab.tenantusers', 'fas fa-users', \App\Entity\MultitenancyModule\TenantUsers::class);
 
         yield MenuItem::section('');
         yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
@@ -69,10 +69,10 @@ class DashboardController extends AbstractDashboardController
 
             // you can use any type of menu item, except submenus
             ->addMenuItems([
-                MenuItem::linkToRoute('My Profile', 'fa fa-id-card', '...', ['...' => '...']),
-                MenuItem::linkToRoute('Settings', 'fa fa-user-cog', '...', ['...' => '...']),
+                MenuItem::linkToRoute('admin.routes.myprofile', 'fa fa-id-card', '...', ['...' => '...']),
+                MenuItem::linkToRoute('admin.routes.settings', 'fa fa-user-cog', '...', ['...' => '...']),
                 MenuItem::section(),
-                MenuItem::linkToLogout('Logout', 'fa fa-sign-out'),
+                MenuItem::linkToLogout('admin.routes.logout', 'fa fa-sign-out'),
             ]);
     }
 }

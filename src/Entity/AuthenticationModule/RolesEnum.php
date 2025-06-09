@@ -16,6 +16,6 @@ enum RolesEnum: int implements TranslatableInterface
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
-        return $translator->trans('notification_type.'.$this->name, [], 'enums', $locale);
+        return $translator->trans('roles.'.$this->name, [], 'enums', $locale);
     }
 }

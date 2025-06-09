@@ -6,6 +6,7 @@ namespace App\Controller\AuthenticationModule;
 
 use App\Entity\AuthenticationModule\User;
 use App\Entity\AuthenticationModule\RolesEnum;
+use App\Entity\AuthenticationModule\UserStatusEnum;
 use App\Form\RegistrationForm;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,6 +51,7 @@ class RegistrationController extends AbstractController
             $user->setIsMfaEnabled(false); // Set the user as not deleted by default
             $user->setLocale('es'); // Set the user as not locked by default
             $user->setRole(RolesEnum::TENANT_USER); // Set the user role
+            $user->setStatus(UserStatusEnum::ACTIVE); // Set the user status to active
             $user->setIsVerified(true); // Set the user as not verified initially
             
 

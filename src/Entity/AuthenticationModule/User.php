@@ -144,6 +144,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\Column(enumType: UserStatusEnum::class)]
+    private ?UserStatusEnum $status = null;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -568,6 +571,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Timesta
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getStatus(): ?UserStatusEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(UserStatusEnum $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

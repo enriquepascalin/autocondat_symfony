@@ -270,3 +270,16 @@ translation_source:
   MANUAL: "Manual"
   AUTO: "Automatic"
   IMPORTED: "Imported"
+
+user_status:
+  ACTIVE: "Active"
+  INACTIVE: "Inactive"
+  SUSPENDED: "Suspended"
+  DELETED: "Deleted"
+
+roles:
+  SUPER_ADMIN: "Super Admin"
+  TENANT_ADMIN: "Tenant Admin"
+  TENANT_USER: "Tenant User"
+  USER: "User"
+  GUEST: "Guest"
