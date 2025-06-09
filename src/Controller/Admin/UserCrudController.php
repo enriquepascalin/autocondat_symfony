@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2025 Enrique Pascalin <erparom@gmail.com>
  * This source code is protected under international copyright law.
@@ -7,10 +8,13 @@
  * This file is confidential and only available to authorized individuals with the
  * permission of the copyright holders.  If you encounter this file and do not have
  * permission, please contact the copyright holders and delete this file.
- * 
+ *
  * @author Enrique Pascalin, Erparom Technologies
+ *
  * @version 1.0.0
+ *
  * @since 2025-06-01
+ *
  * @license license.md
  */
 
@@ -21,59 +25,55 @@ namespace App\Controller\Admin;
 use App\Entity\AuthenticationModule\User;
 use App\Entity\AuthenticationModule\RolesEnum;
 use App\Entity\AuthenticationModule\UserStatusEnum;
-use App\Entity\AuthenticationModule\UserRole;
 use App\Entity\MultitenancyModule\Tenant;
 use App\Traits\TenantAwareTrait;
-use App\Traits\BlameableTrait;
-use App\Traits\SoftDeletableTrait;
-use App\Traits\TimestampableTrait;
+use App\Controller\Admin\MultitenancyModule\SessionCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\ConsentLogCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\SegmentCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\PasswordField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * UserCrudController is responsible for managing the CRUD operations for the User entity.
  * It extends the AbstractCrudController from EasyAdminBundle.
- * 
- * @package App\Controller\Admin
  */
 class UserCrudController extends AbstractCrudController
 {
     public function __construct(
-        private readonly UserPasswordHasherInterface $passwordHasher
-    )
-    { }
+        private readonly UserPasswordHasherInterface $passwordHasher,
+    ) {
+    }
 
     /**
      * Get the fully qualified class name of the entity this controller manages.
-     * 
-     * @return string The fully qualified class name of the User entity.
+     *
+     * @return string the fully qualified class name of the User entity
      */
     public static function getEntityFqcn(): string
     {
         return User::class;
     }
 
-    /** 
+    /**
      * Configure the CRUD settings for the User entity.
      * 
-     * @param Crud $crud
-     * @return Crud
+     * @param Crud $crud the CRUD configuration object
+     * 
+     * @return Crud the configured CRUD object
      */
     public function congfigureCrud(Crud $crud): Crud
     {
@@ -96,53 +96,179 @@ class UserCrudController extends AbstractCrudController
     /**
      * Configure the actions available in the CRUD interface.
      * 
-     * @param string $pageName The name of the page being configured.
-     * @return iterable The list of actions to be displayed.
+     * @param Actions $actions the actions configuration object
+     * 
+     * @return Actions the configured actions object
+     */
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setIcon('fa fa-trash');
+            })
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setIcon('fa fa-pencil');
+            })
+            ->update(Crud::PAGE_INDEX, Action::DETAIL, function (Action $action) {
+                return $action->setIcon('fa fa-eye');
+            });
+    }
+
+    /**
+     * Configure the actions available in the CRUD interface.
+     *
+     * @param string $pageName the name of the page being configured
+     *
+     * @return iterable the list of actions to be displayed
      */
     public function configureFields(string $pageName): iterable
     {
-        yield FormField::addTab('admin.user.tab.general');
+        yield FormField::addTab('admin.tab.general')
+            ->setIcon('fa fa-cog');
         yield IdField::new('id', 'admin.user.field.id')
-            ->onlyOnDetail();
+            ->hideOnForm()
+            ->setColumns(12);
         yield FormField::addPanel('admin.user.panel.credentials')
             ->setIcon('fa fa-key');
         yield EmailField::new('email', 'admin.user.field.email')
             ->setRequired(true)
-            ->setColumns(6);
-         yield TextField::new('password', 'admin.user.field.password')
-            ->setFormType(PasswordType::class)
-            ->onlyOnForms()
-            ->setRequired($pageName === Crud::PAGE_NEW)
-            ->setHelp('admin.user.help.password')
-            ->setColumns(6);       
+            ->setColumns(12);
         yield FormField::addPanel('admin.user.panel.profile')
             ->setIcon('fa fa-user');
         yield ChoiceField::new('status', 'admin.user.field.status')
             ->setChoices(UserStatusEnum::cases())
-            ->setRequired(true);
+            ->setRequired(true)
+            ->setColumns(6);
         yield ChoiceField::new('role', 'admin.user.field.role')
             ->setChoices(RolesEnum::cases())
-            ->setRequired(true);
-        yield AssociationField::new('tenant', 'admin.user.field.tenant')
-            ->autocomplete()
             ->setRequired(true)
-            ->setCrudController(TenantCrudController::class)
             ->setColumns(6);
+        yield TextField::new('locale', 'admin.user.field.locale')
+            ->setHelp('admin.user.help.locale')
+            ->setColumns(6);
+        yield BooleanField::new('isVerified', 'admin.user.field.is_verified')
+            ->setHelp('admin.user.help.is_verified')
+            ->setColumns(6);
+        yield FormField::addPanel('admin.user.security')
+            ->setIcon('fa fa-key');
+        yield TextField::new('password', 'admin.user.field.password')
+           ->setFormType(PasswordType::class)
+           ->onlyOnForms()
+           ->setRequired(Crud::PAGE_NEW === $pageName)
+           ->setHelp('admin.user.help.password')
+           ->setColumns(6);
+         yield TextField::new('mfaSecret', 'admin.user.field.mfa_secret')
+            ->setFormType(PasswordType::class)   
+            ->onlyOnForms()
+            ->setRequired(false)
+            ->setHelp('admin.user.help.mfa_secret')
+            ->setColumns(6);
+        yield BooleanField::new('isMfaEnabled', 'admin.user.field.is_mfa_enabled')
+            ->setHelp('admin.user.help.is_mfa_enabled')
+            ->onlyOnForms()
+            ->setColumns(6);
+        yield TextField::new('passwordResetToken', 'admin.user.field.password_reset_token')
+            ->setFormType(PasswordType::class)   
+            ->onlyOnForms()
+            ->setRequired(false)
+            ->setHelp('admin.user.help.password_reset_token')
+            ->setColumns(6);
+        yield DateTimeField::new('passwordResetExpiresAt', 'admin.user.field.password_reset_expires_at')
+            ->setFormat('yyyy.MM.dd G HH:mm:ss zzz')
+            ->onlyOnForms()
+            ->setColumns(6);
+        yield ArrayField::new('mfaBackupCodes', 'admin.user.field.mfa_backup_codes')
+            ->onlyOnForms()
+            ->setHelp('admin.user.help.mfa_backup_codes')
+            ->setColumns(6);
+
+        /**
+         * Trait implementations for Metadata and Audit Logs
+         */
         yield FormField::addTab('admin.tab.metadata')
             ->setIcon('fa fa-history');
+        yield AssociationField::new('tenant', 'admin.user.field.tenant')
+            ->autocomplete()
+            ->hideOnIndex()
+            ->setRequired(true)
+            ->setCrudController(TenantCrudController::class)
+            ->setColumns(12);
         yield DateTimeField::new('createdAt', 'admin.field.created_at')
-            ->onlyOnDetail();
+            ->hideOnIndex()
+            ->setColumns(6);
         yield DateTimeField::new('updatedAt', 'admin.field.updated_at')
-            ->onlyOnDetail();
-        yield DateTimeField::new('deletedAt', 'admin.field.deleted_at')
-            ->onlyOnDetail();
+            ->hideOnIndex()
+            ->setColumns(6);
+        yield AssociationField::new('createdBy', 'admin.field.created_by')
+            ->hideOnIndex()
+            ->autocomplete()
+            ->setCrudController($this::class)
+            ->setColumns(6);
+        yield AssociationField::new('updatedBy', 'admin.field.updated_by')
+            ->hideOnIndex()
+            ->autocomplete()
+            ->setCrudController($this::class)
+            ->setColumns(6);
+       
+        /**
+         * OneToMany and ManyToMany relations
+         */
+        yield FormField::addTab('admin.tab.details')
+            ->setIcon('fa fa-table');
+        yield FormField::addPanel('admin.user.panel.sessions')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('sessions', 'admin.user.field.sessions')
+            ->autocomplete()
+            ->setCrudController(SessionCrudController::class)
+            ->setColumns(12);
+        yield FormField::addPanel('admin.user.panel.sessions')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('consentLogs', 'admin.user.field.consent_logs')
+            ->autocomplete()
+            ->setCrudController(ConsentLogCrudController::class)
+            ->setColumns(12);
+        yield FormField::addPanel('admin.user.panel.segments')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('segments', 'admin.user.field.segments')
+            ->autocomplete()
+            ->setCrudController(SegmentCrudController::class)
+            ->setColumns(12);
+        /** TODO Relations for not yet implemented admin crud controllers */
+        /*
+        yield FormField::addPanel('admin.user.panel.asigned_project_phases')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('asignedProjectPhases', 'admin.user.field.asigned_project_phases')
+            ->autocomplete()
+            ->setCrudController(AssignmentProjectPhasesCrudController::class);
+        yield FormField::addPanel('admin.user.panel.project_phase_assignments')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('projectPhaseAssignments', 'admin.user.field.project_phase_assignments')
+            ->autocomplete()
+            ->setCrudController(AssignmentProjectPhasesCrudController::class);
+        yield FormField::addPanel('admin.user.panel.audiences')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('audiences', 'admin.user.field.audiences')
+            ->autocomplete()
+            ->setCrudController(AssignmentProjectPhasesCrudController::class);
+        yield FormField::addPanel('admin.user.panel.tickets')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('audiences', 'admin.user.field.tickets')
+            ->autocomplete()
+            ->setCrudController(TicketCrudController::class);
+        yield FormField::addPanel('admin.user.panel.licenses')
+            ->setIcon('fa fa-key');
+        yield AssociationField::new('audiences', 'admin.user.field.licenses')
+            ->autocomplete()
+            ->setCrudController(LicenseCrudController::class);
+         */
     }
 
     /**
      * Persist the entity instance to the database.
-     * 
-     *  @param EntityManagerInterface $entityManager The entity manager to use for persistence.
-     *  @param mixed $entityInstance The instance of the entity to persist.
+     *
+     * @param EntityManagerInterface $entityManager  the entity manager to use for persistence
+     * @param mixed                  $entityInstance the instance of the entity to persist
      */
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
@@ -153,9 +279,9 @@ class UserCrudController extends AbstractCrudController
 
     /**
      * Update the entity instance in the database.
-     * 
-     * @param EntityManagerInterface $entityManager The entity manager to use for updating.
-     * @param mixed $entityInstance The instance of the entity to update.
+     *
+     * @param EntityManagerInterface $entityManager  the entity manager to use for updating
+     * @param mixed                  $entityInstance the instance of the entity to update
      */
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
@@ -166,13 +292,13 @@ class UserCrudController extends AbstractCrudController
 
     /**
      * Handle the password for the User entity.
-     * 
-     * @param User $user The User entity instance.
+     *
+     * @param User $user the User entity instance
      */
     private function handlePassword(User $user): void
     {
         $plainPassword = $user->getPassword();
-        if ($plainPassword !== null) {
+        if (null !== $plainPassword) {
             $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
             $user->setPassword($hashedPassword);
         }
@@ -180,16 +306,15 @@ class UserCrudController extends AbstractCrudController
 
     /**
      * Handle the tenant context for the User entity.
-     * 
-     * @param User $user The User entity instance.
+     *
+     * @param User $user the User entity instance
      */
     private function handleTenantContext(User $user): void
     {
         if (in_array(TenantAwareTrait::class, class_uses($user), true)) {
-            if ($user->getTenant() === null) {
+            if (null === $user->getTenant()) {
                 $user->setTenant($this->getUser()->getTenant());
             }
         }
     }
-
 }
