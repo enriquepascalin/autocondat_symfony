@@ -4,7 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    google_translate.api_key: '%env(GOOGLE_TRANSLATE_API_KEY)%'
 
 services:
     # default configuration for services in *this* file
@@ -21,48 +20,5 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # Decorated translation loader
-    App\Service\LocalizationModule\CachedDatabaseTranslationLoader:
-        decorates: App\Service\LocalizationModule\DatabaseTranslationLoader
-        arguments:
-            $innerLoader: '@.inner'
-            $cache: '@cache.translations'
-
-    App\Service\LocalizationModule\TranslationResolverService:
-        arguments:
-            $translator: '@translator'
-            $translationManager: '@App\Service\LocalizationModule\TranslationManager'
-            $googleTranslate: '@App\Service\LocalizationModule\GoogleTranslateService'
-
-    App\EventListener\LocaleListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 20 }
-
-    App\Service\TenantContext:
-        arguments:
-            $security: '@security.helper'
-
-    App\EventListener\TenantAwareListener:
-        arguments:
-            $tenantContext: '@App\Service\TenantContext'
-        tags:
-            - { name: doctrine.orm.entity_listener, event: prePersist }
-
-    App\EventListener\EntityTimestampListener:
-        tags:
-            - { name: doctrine.orm.entity_listener, event: prePersist }
-            - { name: doctrine.orm.entity_listener, event: preUpdate }
-    
-    App\EventListener\EntityBlameListener:
-        arguments: ['@security.helper']
-        tags:
-            - { name: doctrine.orm.entity_listener, event: prePersist }
-            - { name: doctrine.orm.entity_listener, event: preUpdate }
-
-    App\Service\LocalizationModule\TranslationManager:
-        arguments:
-            $autoTranslator: '@App\\Service\\LocalizationModule\\GoogleTranslateService'
-
-    App\Service\LocalizationModule\DatabaseTranslationLoader:
-        tags:
-            - { name: translation.loader, alias: db, format: db }
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

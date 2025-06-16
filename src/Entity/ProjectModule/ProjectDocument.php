@@ -10,22 +10,31 @@ use App\Entity\StorageManagementModule\Document;
 use App\Repository\ProjectModule\ProjectDocumentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
+use App\Contracts\BlameableInterface;
+use App\Contracts\TimestampableInterface;
+use App\Contracts\SoftDeletableInterface;
+use App\Contracts\TenantAwareInterface;
+use App\Traits\BlameableTrait;
+use App\Traits\TimestampableTrait;
+use App\Traits\SoftDeletableTrait;
+use App\Traits\TenantAwareTrait;
 
 #[ORM\Entity(repositoryClass: ProjectDocumentRepository::class)]
 #[ApiResource]
 #[Broadcast]
-class ProjectDocument
+class ProjectDocument implements TimestampableInterface, SoftDeletableInterface, TenantAwareInterface, BlameableInterface
 {
+    use TimestampableTrait;
+    use SoftDeletableTrait;
+    use TenantAwareTrait;
+    use BlameableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'projectDocuments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Tenant $tenant = null;
-
-    #[ORM\ManyToOne(inversedBy: 'projectDocuments')]
+    #[ORM\ManyToOne(inversedBy: 'documents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Project $project = null;
 
@@ -38,18 +47,6 @@ class ProjectDocument
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTenant(): ?Tenant
-    {
-        return $this->tenant;
-    }
-
-    public function setTenant(?Tenant $tenant): static
-    {
-        $this->tenant = $tenant;
-
-        return $this;
     }
 
     public function getProject(): ?Project

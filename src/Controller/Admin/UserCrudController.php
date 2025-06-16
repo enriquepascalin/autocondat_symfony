@@ -48,8 +48,10 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * UserCrudController is responsible for managing the CRUD operations for the User entity.
  * It extends the AbstractCrudController from EasyAdminBundle.
+ * 
+ * @extends AbstractCrudController<Permission>
  */
-class UserCrudController extends AbstractCrudController
+final class UserCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
@@ -83,10 +85,7 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_DETAIL, 'admin.user.detail.title')
             ->setPageTitle(Crud::PAGE_EDIT, 'admin.user.edit.title')
             ->setPageTitle(Crud::PAGE_NEW, 'admin.user.new.title')
-            ->setSearchFields([
-                'email',
-                'role',
-            ])
+            ->setSearchFields(['email', 'role',])
             ->setPaginatorPageSize(30)
             ->setDefaultSort(['createdAt' => 'DESC'])
         ;
