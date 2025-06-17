@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2025 Enrique Pascalin <erparom@gmail.com>
  * This source code is protected under international copyright law.

@@ -283,3 +283,62 @@ roles:
   TENANT_USER: "Tenant User"
   USER: "User"
   GUEST: "Guest"
+
+customer_type:
+  TENANT:   "Tenant"
+  EXTERNAL: "External customer"
+
+product_type:
+  PHYSICAL: "Physical product"
+  SERVICE:  "Service"
+  DIGITAL:  "Digital product or licence"
+  BUNDLE:   "Product bundle"
+
+quote_status:
+  DRAFT:    "Draft"
+  SENT:     "Sent to customer"
+  ACCEPTED: "Accepted"
+  REJECTED: "Rejected"
+  EXPIRED:  "Expired"
+
+order_status:
+  PENDING:   "Pending"
+  CONFIRMED: "Confirmed"
+  FULFILLED: "Fulfilled"
+  CANCELLED: "Cancelled"
+  RETURNED:  "Returned"
+
+payment_status:
+  PENDING:        "Pending"
+  PARTIALLY_PAID: "Partially paid"
+  PAID:           "Paid in full"
+  REFUNDED:       "Refunded"
+
+event_type:
+  CALL:     "Call"
+  MEETING:  "Meeting"
+  EMAIL:    "Email"
+  TASK:     "Task"
+  DEADLINE: "Deadline"
+
+loyalty_program_status:
+  ACTIVE:     "Active"
+  SUSPENDED:  "Suspended"
+  TERMINATED: "Terminated"
+
+loyalty_tier:
+  BRONZE:   "Bronze"
+  SILVER:   "Silver"
+  GOLD:     "Gold"
+  PLATINUM: "Platinum"
+
+reseller_tier:
+  REGISTERED: "Registered"
+  SILVER:     "Silver"
+  GOLD:       "Gold"
+  PLATINUM:   "Platinum"
+
+category_type:
+  BUNDLE:   "Bundle category"
+  TAXONOMY: "Taxonomy category"
+  TAG:      "Tag category" 
