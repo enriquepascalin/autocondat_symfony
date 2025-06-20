@@ -30,11 +30,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
+#[Route('/admin', name: 'admin', methods: ['GET'])]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig');
+        return $this->render('BackofficeModule/admin/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
