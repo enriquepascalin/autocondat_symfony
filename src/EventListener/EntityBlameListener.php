@@ -25,7 +25,7 @@ use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Contracts\BlameableInterface;
-use App\Entity\AuthenticationModule\User;
+use App\AuthenticationModule\Entity\User;
 
 class EntityBlameListener
 {

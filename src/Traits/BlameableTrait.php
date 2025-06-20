@@ -16,13 +16,12 @@
  *
  * @license license.md
  */
-
 declare(strict_types=1);
 
 namespace App\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\AuthenticationModule\User;
+use App\AuthenticationModule\Entity\User;
 
 trait BlameableTrait
 {

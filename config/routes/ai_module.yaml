@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/AIModule/Controller/
+    type: attribute
+    prefix: /AIModule

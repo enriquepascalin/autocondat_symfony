@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/LocalizationModule/Controller/
+    type: attribute
+    prefix: /LocalizationModule

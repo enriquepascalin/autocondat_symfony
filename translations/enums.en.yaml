@@ -342,3 +342,22 @@ category_type:
   BUNDLE:   "Bundle category"
   TAXONOMY: "Taxonomy category"
   TAG:      "Tag category" 
+
+audit_actor_type:
+  USER:    "User actor"
+  SERVICE: "Service actor"
+  SYSTEM:  "System actor"
+
+audit_action:
+  CREATE:  "Create action"
+  READ:    "Read action"
+  UPDATE:  "Update action"
+  DELETE:  "Delete action"
+  AUTH:    "Authentication action"
+  ACCESS:  "Access action"
+  SYSTEM:  "System action"
+
+audit_severity:
+  INFO:     "Informational event"
+  WARN:     "Warning event"
+  CRITICAL: "Critical event"

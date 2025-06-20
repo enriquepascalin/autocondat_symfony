@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/IntegrationGatewayModule/Controller/
+    type: attribute
+    prefix: /IntegrationGatewayModule

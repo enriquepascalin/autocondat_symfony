@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-use App\Entity\MultitenancyModule\Tenant;
+use App\MultitenancyModule\Entity\Tenant;
 
 /**
  * Interface TenantAwareInterface.

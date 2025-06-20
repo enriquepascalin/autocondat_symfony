@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/ERPModule/Controller/
+    type: attribute
+    prefix: /ERPModule

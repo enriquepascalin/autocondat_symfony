@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/WorkflowModule/Controller/
+    type: attribute
+    prefix: /WorkflowModule

@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/AuthenticationModule/Controller/
+    type: attribute
+    prefix: /AuthenticationModule

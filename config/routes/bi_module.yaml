@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/BIModule/Controller/
+    type: attribute
+    prefix: /BIModule

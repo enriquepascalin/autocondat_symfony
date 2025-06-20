@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-use App\Entity\AuthenticationModule\User;
+use App\AuthenticationModule\Entity\User;
 
 interface BlameableInterface
 {

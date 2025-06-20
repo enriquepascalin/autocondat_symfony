@@ -22,7 +22,7 @@ declare(strict_types=1);
 namespace App\Tests\EventListener;
 
 use App\EventListener\LocaleListener;
-use App\Entity\AuthenticationModule\User;
+use App\AuthenticationModule\Entity\User;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;

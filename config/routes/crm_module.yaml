@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/CRMModule/Controller/
+    type: attribute
+    prefix: /CRMModule

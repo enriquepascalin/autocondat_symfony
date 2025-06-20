@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/NotificationModule/Controller/
+    type: attribute
+    prefix: /NotificationModule

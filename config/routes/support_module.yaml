@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/SupportModule/Controller/
+    type: attribute
+    prefix: /SupportModule

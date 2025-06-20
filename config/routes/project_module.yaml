@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/ProjectModule/Controller/
+    type: attribute
+    prefix: /ProjectModule

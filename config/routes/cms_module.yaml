@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/CMSModule/Controller/
+    type: attribute
+    prefix: /CMSModule

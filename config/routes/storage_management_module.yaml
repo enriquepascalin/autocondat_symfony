@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/StorageManagementModule/Controller/
+    type: attribute
+    prefix: /StorageManagementModule

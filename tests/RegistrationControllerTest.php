@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Repository\AuthenticationModule\UserRepository;
+use App\AuthenticationModule\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

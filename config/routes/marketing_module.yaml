@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/MarketingModule/Controller/
+    type: attribute
+    prefix: /MarketingModule

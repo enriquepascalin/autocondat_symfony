@@ -22,7 +22,7 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\MultitenancyModule\Tenant;
+use App\MultitenancyModule\Entity\Tenant;
 
 trait TenantAwareTrait
 {

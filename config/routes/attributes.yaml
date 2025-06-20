@@ -1,5 +1,5 @@
 controllers:
     resource:
-        path: ../../src/Controller/AuthenticationModule
-        namespace: App\Controller\AuthenticationModule
+        path: ../../src/AuthenticationModule/Controller/
+        namespace: App\AuthenticationModule\Controller
     type: attribute

@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/MarketplaceModule/Controller/
+    type: attribute
+    prefix: /MarketplaceModule

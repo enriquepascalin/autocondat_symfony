@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Entity\MultitenancyModule\Tenant;
+use App\MultitenancyModule\Entity\Tenant;
 use Doctrine\ORM\QueryBuilder;
 
 trait TenantFilterRepositoryTrait

@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Entity\AuthenticationModule\User;
+use App\AuthenticationModule\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

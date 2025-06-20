@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/MultitenancyModule/Controller/
+    type: attribute
+    prefix: /MultitenancyModule

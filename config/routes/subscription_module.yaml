@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/SubscriptionModule/Controller/
+    type: attribute
+    prefix: /SubscriptionModule
