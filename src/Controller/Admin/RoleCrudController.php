@@ -19,36 +19,29 @@
 
 declare(strict_types=1);
 
-namespace App\BackofficeModule\Controller\Admin;
+namespace App\Controller\Admin;
 
-use App\LocalizationModule\Entity\TranslationEntry;
+use App\AuthenticationModule\Entity\Role;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
-class TranslationEntryCrudController extends AbstractCrudController
+class RoleCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return TranslationEntry::class;
+        return Role::class;
     }
 
+    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->onlyOnIndex(),
-            TextField::new('locale'),
-            TextField::new('domain'),
-            TextField::new('key'),
-            TextField::new('value'),
-            TextField::new('tenantId'),
-            ChoiceField::new('source')
-                ->setChoices([
-                    'Manual' => 0,
-                    'Automatic' => 1,
-                    'Imported' => 2,
-                ]),
+            IdField::new('id'),
+            TextField::new('title'),
+            TextEditorField::new('description'),
         ];
     }
+    */
 }

@@ -19,7 +19,7 @@
 
 declare(strict_types=1);
 
-namespace App\BackofficeModule\Controller\Admin;
+namespace App\Controller\Admin;
 
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -30,7 +30,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
-#[Route('/admin', name: 'admin', methods: ['GET'])]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response

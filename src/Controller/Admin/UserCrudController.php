@@ -19,7 +19,7 @@
 
 declare(strict_types=1);
 
-namespace App\BackofficeModule\Controller\Admin;
+namespace App\Controller\Admin;
 
 use App\AuthenticationModule\Entity\User;
 use App\AuthenticationModule\Entity\RolesEnum;
@@ -44,25 +44,14 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * UserCrudController is responsible for managing the CRUD operations for the User entity.
- * It extends the AbstractCrudController from EasyAdminBundle.
- * 
- * @extends AbstractCrudController<Permission>
- */
-final class UserCrudController extends AbstractCrudController
+class UserCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly Security $security,
     ) {
     }
-
-    /**
-     * Get the fully qualified class name of the entity this controller manages.
-     *
-     * @return string the fully qualified class name of the User entity
-     */
+    
     public static function getEntityFqcn(): string
     {
         return User::class;

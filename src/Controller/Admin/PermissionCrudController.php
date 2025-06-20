@@ -18,7 +18,7 @@
  */
 declare(strict_types=1);
 
-namespace App\BackofficeModule\Controller\Admin;
+namespace App\Controller\Admin;
 
 use App\AuthenticationModule\Entity\Permission;
 use App\AuthenticationModule\Entity\Role;
@@ -35,18 +35,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-/**
- * CRUD controller for Permission management.
- *
- * @extends AbstractCrudController<Permission>
- */
-final class PermissionCrudController extends AbstractCrudController
+class PermissionCrudController extends AbstractCrudController
 {
-    /**
-     * Returns the fully qualified class name of the entity managed by this CRUD controller.
-     *
-     * @return class-string<Permission>
-     */
     public static function getEntityFqcn(): string
     {
         return Permission::class;

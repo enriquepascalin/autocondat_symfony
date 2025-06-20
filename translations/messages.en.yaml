@@ -60,6 +60,14 @@ admin:
     updated_by: 'Updated By'
     deleted_by: 'Deleted By'
   user:
+    index:
+      title: 'User Management'
+      index_title: 'User Management'
+      new_title: 'Create New User'
+      edit_title: 'Edit User %email%'
+      detail_title: 'User Details: %email%'
+      singular: 'User'
+      plural: 'Users'
     index_title: 'User Management'
     new_title: 'Create New User'
     edit_title: 'Edit User %email%'

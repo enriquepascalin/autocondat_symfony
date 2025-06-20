@@ -18,7 +18,7 @@
  */
 declare(strict_types=1);
 
-namespace App\BackofficeModule\Controller\Admin;
+namespace App\Controller\Admin;
 
 use App\AuthenticationModule\Entity\Session;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -33,19 +33,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 
-/**
- * SessionCrudController is responsible for managing the CRUD operations for the
- * Session entity. It extends the AbstractCrudController from EasyAdminBundle.
- * 
- * @extends AbstractCrudController<Permission>
- */
-final class SessionCrudController extends AbstractCrudController
+class SessionCrudController extends AbstractCrudController
 {
-    /**
-     * Get the fully qualified class name of the entity this controller manages.
-     *
-     * @return string the fully qualified class name of the Session entity
-     */
     public static function getEntityFqcn(): string
     {
         return Session::class;
