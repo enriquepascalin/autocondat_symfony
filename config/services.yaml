@@ -97,3 +97,12 @@ services:
             $renderer: '@App\NotificationModule\Service\TemplateRendererService'
             $ruleService: '@App\NotificationModule\Service\DeliveryRuleService'
             $channelRouter: '@App\NotificationModule\Service\ChannelRouterService'
+
+services:
+    _instanceof:
+        App\NotificationModule\Contract\ChannelSenderInterface:
+            tags: ['notification.channel_sender']
+
+    App\NotificationModule\Service\ChannelRouterService:
+        arguments:
+            $logger: '@monolog.logger.notification'
