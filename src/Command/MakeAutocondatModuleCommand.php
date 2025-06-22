@@ -45,6 +45,7 @@ final class MakeAutocondatModuleCommand extends Command
         'e' => ['Event', 'EventSubscriber', 'EventListener'],
         'c' => ['Contract'],
         'm' => ['Message'],
+        'n' => ['Enum'],
         't' => ['Traits'],
         'o' => ['ValueObject'],
     ];
@@ -67,6 +68,7 @@ final class MakeAutocondatModuleCommand extends Command
             ->addOption('e', null, InputOption::VALUE_NONE, 'Add Event, Subscriber, Listener')
             ->addOption('c', null, InputOption::VALUE_NONE, 'Add Contract folder')
             ->addOption('m', null, InputOption::VALUE_NONE, 'Add Message folder')
+            ->addOption('n', null, InputOption::VALUE_NONE, 'Add Enum folder')
             ->addOption('t', null, InputOption::VALUE_NONE, 'Add Traits folder')
             ->addOption('o', null, InputOption::VALUE_NONE, 'Add ValueObject folder')
             ->addOption('all', 'a', InputOption::VALUE_NONE, 'Generate every optional folder (-ecnmto)')

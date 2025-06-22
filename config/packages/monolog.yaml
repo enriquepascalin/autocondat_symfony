@@ -1,6 +1,15 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
+        - audit # Audit events are logged in the dedicated "audit" channel when it exists
+    handlers:
+        audit:
+            type: rotating_file
+            path: '%kernel.logs_dir%/audit.log'
+            level: info
+            channels: ['audit']
+            max_files: 30
+            formatter: monolog.formatter.json
 
 when@dev:
     monolog:

@@ -24,6 +24,8 @@ namespace App\AuditTrailModule\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\AuditTrailModule\Repository\AuditRetentionPolicyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 
@@ -45,6 +47,17 @@ class AuditRetentionPolicy
 
     #[ORM\Column(nullable: true)]
     private ?int $anonymizeAfterDays = null;
+
+    /**
+     * @var Collection<int, AuditEvent>
+     */
+    #[ORM\OneToMany(targetEntity: AuditEvent::class, mappedBy: 'retentionPolicy')]
+    private Collection $events;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,6 +96,36 @@ class AuditRetentionPolicy
     public function setAnonymizeAfterDays(?int $anonymizeAfterDays): static
     {
         $this->anonymizeAfterDays = $anonymizeAfterDays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AuditEvent>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(AuditEvent $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setRetentionPolicy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(AuditEvent $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getRetentionPolicy() === $this) {
+                $event->setRetentionPolicy(null);
+            }
+        }
 
         return $this;
     }

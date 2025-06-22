@@ -1,2 +1,45 @@
 framework:
-    workflows: null
+    workflows:
+        notification:
+            type: 'workflow'
+            audit_trail:
+                enabled: true
+            initial_marking: created
+            supports:
+                - App\NotificationModule\Entity\Notification
+                - App\WorkflowModule\Contract\WorkflowSubjectInterface
+            places:
+                - created
+                - queued
+                - pending
+                - sent
+                - delivered
+                - failed
+                - acknowledged
+                - opened
+                - archived
+            transitions:
+                queue:
+                    from: created
+                    to: queued
+                prepare:
+                    from: queued
+                    to: pending
+                send:
+                    from: pending
+                    to: sent
+                deliver:
+                    from: sent
+                    to: delivered
+                fail:
+                    from: sent
+                    to: failed
+                acknowledge:
+                    from: delivered
+                    to: acknowledged
+                open:
+                    from: delivered
+                    to: opened
+                archive:
+                    from: [delivered, failed, acknowledged, opened]
+                    to: archived

@@ -1,0 +1,4 @@
+controllers:
+    resource: ../../src/ObservabilityModule/Controller/
+    type: attribute
+    prefix: /ObservabilityModule

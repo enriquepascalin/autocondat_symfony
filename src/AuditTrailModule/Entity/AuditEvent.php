@@ -72,6 +72,12 @@ class AuditEvent
     #[ORM\OneToMany(targetEntity: AuditTag::class, mappedBy: 'event')]
     private Collection $tags;
 
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?AuditActor $actor = null;
+
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?AuditRetentionPolicy $retentionPolicy = null;
+
     public function __construct()
     {
         $this->auditChangeSets = new ArrayCollection();
@@ -223,6 +229,30 @@ class AuditEvent
                 $tag->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActor(): ?AuditActor
+    {
+        return $this->actor;
+    }
+
+    public function setActor(?AuditActor $actor): static
+    {
+        $this->actor = $actor;
+
+        return $this;
+    }
+
+    public function getRetentionPolicy(): ?AuditRetentionPolicy
+    {
+        return $this->retentionPolicy;
+    }
+
+    public function setRetentionPolicy(?AuditRetentionPolicy $retentionPolicy): static
+    {
+        $this->retentionPolicy = $retentionPolicy;
 
         return $this;
     }

@@ -35,20 +35,28 @@ use App\Contracts\BlameableInterface;
 use App\Contracts\TimestampableInterface;
 use App\Contracts\SoftDeletableInterface;
 use App\Contracts\TenantAwareInterface;
+use App\WorkflowModule\Contract\WorkflowSubjectInterface;
 use App\Traits\BlameableTrait;
 use App\Traits\TimestampableTrait;
 use App\Traits\SoftDeletableTrait;
 use App\Traits\TenantAwareTrait;
+use App\WorkflowModule\Traits\WorkflowTrait;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 #[ApiResource]
 #[Broadcast]
-class Notification
+final class Notification implements 
+    WorkflowSubjectInterface,
+    TimestampableInterface,
+    SoftDeletableInterface,
+    TenantAwareInterface,
+    BlameableInterface
 {
     use TimestampableTrait;
     use SoftDeletableTrait;
     use TenantAwareTrait;
     use BlameableTrait;
+    use WorkflowTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

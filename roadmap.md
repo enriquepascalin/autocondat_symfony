@@ -14,7 +14,7 @@
   * [ ] AuthenticationModule (JWT, SSO, MFA)
     * [x] Entities
     * [ ] Services
-  * [ ] MultiTenancyModule
+  * [ ] MultitenancyModule
     * [x] Entities
     * [ ] Services
   * [ ] WorkflowModule (State machines, rules)
@@ -85,7 +85,7 @@
   * [ ] AuthenticationModule
     * [ ] Controllers + EasyAdminBundleCRUDs
     * [ ] Listeners + Automation
-  * [ ] MultiTenancyModule
+  * [ ] MultitenancyModule
     * [ ] Controllers + EasyAdminBundleCRUDs
     * [ ] Listeners + Automation
   * [ ] WorkflowModule (State machines, rules)

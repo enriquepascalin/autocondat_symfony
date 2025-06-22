@@ -68,3 +68,23 @@ services:
     App\LocalizationModule\Service\DatabaseTranslationLoader:
         tags:
             - { name: translation.loader, alias: db, format: db }
+
+    # AuditTrailModule services
+    App\AuditTrailModule\Service\AuditTrailService:
+        arguments:
+            $auditEventRepository: '@App\AuditTrailModule\Repository\AuditEventRepository'
+            $tenantContext: '@App\MultitenancyModule\Service\TenantContext'
+            $security: '@security.helper'
+            $logger: '@monolog.logger.audit'
+
+    # NotificationModule integration
+    App\NotificationModule\Service\NotificationTrackerService:
+        arguments:
+            $auditTrail: '@App\AuditTrailModule\Service\AuditTrailService'
+
+    Symfony\Component\Workflow\WorkflowInterface $notificationWorkflow: 
+        '@workflow.notification'
+
+
+    App\AuditTrailModule\:
+        resource: '../src/AuditTrailModule/'
