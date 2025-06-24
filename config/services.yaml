@@ -88,3 +88,21 @@ services:
 
     App\AuditTrailModule\:
         resource: '../src/AuditTrailModule/'
+
+    App\NotificationModule\Service\DeliveryPipelineService:
+        arguments:
+            $logger: '@monolog.logger.notification'
+            $dispatcher: '@event_dispatcher'
+            $tracker: '@App\NotificationModule\Service\NotificationTrackerService'
+            $renderer: '@App\NotificationModule\Service\TemplateRendererService'
+            $ruleService: '@App\NotificationModule\Service\DeliveryRuleService'
+            $channelRouter: '@App\NotificationModule\Service\ChannelRouterService'
+
+services:
+    _instanceof:
+        App\NotificationModule\Contract\ChannelSenderInterface:
+            tags: ['notification.channel_sender']
+
+    App\NotificationModule\Service\ChannelRouterService:
+        arguments:
+            $logger: '@monolog.logger.notification'
