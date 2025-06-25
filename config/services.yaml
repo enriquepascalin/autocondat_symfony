@@ -85,7 +85,6 @@ services:
     Symfony\Component\Workflow\WorkflowInterface $notificationWorkflow: 
         '@workflow.notification'
 
-
     App\AuditTrailModule\:
         resource: '../src/AuditTrailModule/'
 
@@ -98,7 +97,6 @@ services:
             $ruleService: '@App\NotificationModule\Service\DeliveryRuleService'
             $channelRouter: '@App\NotificationModule\Service\ChannelRouterService'
 
-services:
     _instanceof:
         App\NotificationModule\Contract\ChannelSenderInterface:
             tags: ['notification.channel_sender']
@@ -106,3 +104,9 @@ services:
     App\NotificationModule\Service\ChannelRouterService:
         arguments:
             $logger: '@monolog.logger.notification'
+
+    App\NotificationModule\Service\DeliveryRuleService:
+        arguments:
+            $logger: '@monolog.logger.notification'
+            $scheduler: '@App\NotificationModule\Service\ScheduledRuleService'
+            $tenantRateLimiterFactory: '@rate_limiter.tenant_notifications'

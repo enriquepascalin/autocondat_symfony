@@ -1,0 +1,14 @@
+framework:
+    rate_limiter:
+        tenant_global_limiter:
+            policy: 'token_bucket'
+            limit: 1000
+            interval: '1 hour'
+        channel_email_limiter:
+            policy: 'sliding_window'
+            limit: 500
+            interval: '1 hour'
+        type_marketing_limiter:
+            policy: 'fixed_window'
+            limit: 200
+            interval: '1 hour'

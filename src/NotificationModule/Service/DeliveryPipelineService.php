@@ -98,6 +98,7 @@ final class DeliveryPipelineService
         $this->ruleService->applyRecipientRules($notification);
         $this->ruleService->applyScheduleRules($notification);
         $this->ruleService->applyRateLimits($notification);
+        $this->ruleService->applyContentRules($notification);
     }
 
     /**
