@@ -25,8 +25,16 @@ use App\NotificationModule\Entity\Acknowledgement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
- * @extends ServiceEntityRepository<Acknowledgement>
+ * Repository for Acknowledgement entities.
+ * 
+ * Provides custom query methods for accessing acknowledgement data.
+ * 
+ * @method Acknowledgement|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Acknowledgement|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Acknowledgement[]    findAll()
+ * @method Acknowledgement[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class AcknowledgementRepository extends ServiceEntityRepository
 {
@@ -35,28 +43,34 @@ class AcknowledgementRepository extends ServiceEntityRepository
         parent::__construct($registry, Acknowledgement::class);
     }
 
-    //    /**
-    //     * @return Acknowledgement[] Returns an array of Acknowledgement objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Finds an acknowledgement by user and notification.
+     *
+     * @param User $user The user entity
+     * @param Notification $notification The notification entity
+     * @return Acknowledgement|null The acknowledgement or null if not found
+     */
+    public function findOneByUserAndNotification(User $user, Notification $notification): ?Acknowledgement
+    {
+        return $this->findOneBy([
+            'user' => $user,
+            'notification' => $notification
+        ]);
+    }
 
-    //    public function findOneBySomeField($value): ?Acknowledgement
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Finds expired acknowledgements (where expiresAt is in the past and action is SNOOZE).
+     *
+     * @return array<Acknowledgement> List of expired acknowledgements
+     */
+    public function findExpiredAcknowledgements(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.expiresAt < :now')
+            ->andWhere('a.action = :snooze')
+            ->setParameter('now', new \DateTime())
+            ->setParameter('snooze', AckActionEnum::SNOOZE)
+            ->getQuery()
+            ->getResult();
+    }
 }
