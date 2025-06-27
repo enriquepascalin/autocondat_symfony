@@ -256,7 +256,6 @@ class NotificationOrchestratorService
             throw new \LogicException('Scheduled notification requires a schedule rule');
         }
 
-        // Generate triggers based on complex business rules
         $triggers = $this->scheduleRuleService->generateTriggers($scheduleRule);
 
         foreach ($triggers as $trigger) {
@@ -328,7 +327,7 @@ class NotificationOrchestratorService
                 
                 if ($retryCount <= $maxRetries) {
                     usleep($retryDelay * 1000);
-                    $retryDelay *= 2; // Exponential backoff
+                    $retryDelay *= 2;
                 } else {
                     throw $e;
                 }
