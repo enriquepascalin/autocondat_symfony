@@ -31,7 +31,7 @@ II.  [Core Architecture](#ii-core-architecture)
 
 &nbsp;&nbsp;&nbsp;&nbsp;II.3 [Orchestration Layer](#ii3-orchestration-layer)
 
-&nbsp;&nbsp;&nbsp;&nbsp;II.4 [Processing Services](#ii4-processing-services)
+&nbsp;&nbsp;&nbsp;&nbsp;II.4 [Notification Artifacts](#ii4-notification-artifacts)
 
 III. [Processing Pipeline](#iii-processing-pipeline)
 
@@ -497,7 +497,299 @@ Asynchronous workers render content via Twig templates. It applies business rule
 4.  Initiate tracking workflows
 
 ---
-### II.4 Processing Services
+### II.4 Notification Artifacts
+
+#### Entities:
+
+* **Notification**: This entity represents the notification objects. Notifications persist any news, alerts, messages, communications and notifications into the notifications table and are able to track their status via workflows, they are tenant aware, and they can be triggered via API, Scheduling, Events, User triggered. 
+
+    Notifications implement the following interfaces and use following traits:
+    * `WorkflowSubjectInterface` and `WorkflowTrait`
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+    
+    Notifications are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+    * `Task` (Workflows Module) *ManyToOne*
+    * `Audience` *ManyToOne*
+    * `Document` (Storage Management Module) *ManyToOne*
+    * `DeliveryRule` OneToMany
+    * `Acknowledgement` OneToMany
+    * `NotificationLog` OneToMany
+
+    Notifications contain the following fields:
+    * *id* (int)
+    * *task* (relationship `Task`)
+    * *type* (enum->string `NotificationTypeEnum`)
+    * *content* (text)
+    * *sentAt* (datetimeImmutable)
+    * *Tenant* (relationship `Tenant`)
+    * *status* (enum->string `NotificationStatusEnum`)
+    * *isMandatory* (bool)
+    * *isBlockingAlert* (bool)
+    * *Audience* (relationship `Audience`)
+    * *scheduledAt* (dateTime)
+    * *linkedDocument* (relationship `Document`)
+    * *deliveryRules* (relationship `DeliveryRule`)
+    * *acknowledgements* (relationship `Acknowledgement`)
+    * *notificationLogs* (relationship `Acknowledgement`)
+    * \+ Trait related fields (timestamps, user, etc)
+
+* **Acknowledgement**: This entity represents user acknowledgments of notifications. Acknowledgements persist user responses to notifications, including actions like read/confirm/dismiss/archive, with timestamps and tenant context.
+
+    Acknowledgements implement the following interfaces and use following traits:
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+
+    Acknowledgements are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+    * `Notification` *ManyToOne*
+    * `User` (Authentication Module) *ManyToOne* (as autocondatUser)
+
+    Acknowledgements contain the following fields:
+    * *id* (int)
+    * *tenant* (relationship `Tenant`)
+    * *autocondatUser* (relationship `User`)
+    * *notification* (relationship `Notification`)
+    * *acknowledgedAt* (datetimeImmutable)
+    * *action* (enum->string `AckActionEnum`)
+    * \+ Trait related fields (timestamps, user, etc)
+
+* **Audience**: This entity represents target groups for notifications. Audiences define recipient segments through user/segment associations and are tenant-scoped.
+
+    Audiences implement the following interfaces and use following traits:
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+
+    Audiences are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+    * `Segment` (CRM Module) *ManyToMany*
+    * `User` (Authentication Module) *ManyToMany*
+    * `Notification` *OneToMany*
+
+    Audiences contain the following fields:
+    * *id* (int)
+    * *tenant* (relationship `Tenant`)
+    * *name* (string)
+    * *segments* (relationship `Segment`)
+    * *users* (relationship `User`)
+    * *notifications* (relationship `Notification`)
+    * \+ Trait related fields (timestamps, user, etc)
+
+* **Channel**: This entity represents notification delivery channels. Channels configure provider-specific settings (email/SMS/push/webhook) with tenant isolation and default flags.
+
+    Channels implement the following interfaces and use following traits:
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+
+    Channels are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+    * `DeliveryRule` *ManyToMany*
+    * `NotificationLog` *OneToMany*
+
+    Channels contain the following fields:
+    * *id* (int)
+    * *tenant* (relationship `Tenant`)
+    * *type* (enum->string `ChannelTypeEnum`)
+    * *provider* (enum->string `ProviderEnum`)
+    * *config* (json array)
+    * *isDefault* (bool)
+    * *deliveryRules* (relationship `DeliveryRule`)
+    * *notificationLogs* (relationship `NotificationLog`)
+    * \+ Trait related fields (timestamps, user, etc)
+
+* **DeliveryRule**: This entity represents notification delivery rules. Rules define channel routing, retry policies, acknowledgment requirements, and expiration with tenant context.
+
+    DeliveryRules implement the following interfaces and use following traits:
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+
+    DeliveryRules are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+    * `Segment` (CRM Module) *ManyToMany*
+    * `Notification` *ManyToOne*
+    * `Channel` *ManyToMany*
+
+    DeliveryRules contain the following fields:
+    * *id* (int)
+    * *tenant* (relationship `Tenant`)
+    * *name* (string)
+    * *segments* (relationship `Segment`)
+    * *notification* (relationship `Notification`)
+    * *channels* (relationship `Channel`)
+    * *retryPolicy* (json array)
+    * *requireAcknowledgment* (bool)
+    * *maxAckAttempts* (int)
+    * *expiresAt* (datetimeImmutable)
+    * \+ Trait related fields (timestamps, user, etc)
+
+* **NotificationLog**: This entity represents notification delivery logs. Logs track delivery status, errors, and acknowledgment state per channel with tenant context.
+
+    NotificationLogs implement the following interfaces and use following traits:
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+
+    NotificationLogs are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+    * `Notification` *ManyToOne*
+    * `Channel` *ManyToOne*
+
+    NotificationLogs contain the following fields:
+    * *id* (int)
+    * *tenant* (relationship `Tenant`)
+    * *notification* (relationship `Notification`)
+    * *channel* (relationship `Channel`)
+    * *status* (enum->string `DeliveryStatusEnum`)
+    * *error* (text)
+    * *isAcknowledged* (bool)
+    * \+ Trait related fields (timestamps, user, etc)
+
+* **ScheduleRule**: This entity represents notification scheduling rules. Rules define cron-based schedules with exclusions and timezones for future notifications.
+
+    ScheduleRules implement the following interfaces and use following traits:
+    * `TimestampableInterface` and `TimestampableTrait`
+    * `SoftDeletableInterface` and `SoftDeletableTrait`
+    * `TenantAwareInterface` and `TenantAwareTrait`
+    * `BlameableInterface` and `BlameableTrait`
+
+    ScheduleRules are related to the following Entities:
+    * `Tenant` (Multitenancy Module) *ManyToOne*
+
+    ScheduleRules contain the following fields:
+    * *id* (int)
+    * *tenant* (relationship `Tenant`)
+    * *cronExpression* (string)
+    * *startAt* (datetimeImmutable)
+    * *endAt* (datetimeImmutable)
+    * *excludeDates* (json array)
+    * *timezone* (json array)
+    * \+ Trait related fields (timestamps, user, etc)
+
+```mermaid
+erDiagram
+    Tenant ||--o{ Notification : "owns"
+    Tenant ||--o{ Acknowledgement : "owns"
+    Tenant ||--o{ Audience : "owns"
+    Tenant ||--o{ Channel : "owns"
+    Tenant ||--o{ DeliveryRule : "owns"
+    Tenant ||--o{ NotificationLog : "owns"
+    Tenant ||--o{ ScheduleRule : "owns"
+    
+    Notification {
+        int id PK
+        int tenant_id FK "not null"
+        int task_id FK
+        int audience_id FK
+        int linked_document_id FK
+        enum type
+        text content
+        datetime sentAt
+        enum status
+        bool isMandatoryAck
+        bool isBlockingAlert
+        datetime scheduledAt
+    }
+    
+    Notification ||--|{ Task : "associated_with"
+    Notification ||--|| Audience : "targets"
+    Notification ||--|| Document : "links_to"
+    Notification ||--o{ DeliveryRule : "has"
+    Notification ||--o{ Acknowledgement : "has"
+    Notification ||--o{ NotificationLog : "has"
+    
+    Acknowledgement {
+        int id PK
+        int tenant_id FK "not null"
+        int notification_id FK "not null"
+        int user_id FK "not null"
+        datetime acknowledgedAt
+        enum action
+    }
+    
+    Audience {
+        int id PK
+        int tenant_id FK "not null"
+        string name
+    }
+    
+    Audience ||--o{ Notification : "receives"
+    Audience ||--|{ Segment : "contains"
+    Audience ||--|{ User : "contains"
+    
+    Channel {
+        int id PK
+        int tenant_id FK "not null"
+        enum type
+        enum provider
+        json config
+        bool isDefault
+    }
+    
+    Channel ||--|{ DeliveryRule : "used_in"
+    Channel ||--o{ NotificationLog : "used_in"
+    
+    DeliveryRule {
+        int id PK
+        int tenant_id FK "not null"
+        int notification_id FK "not null"
+        string name
+        json retryPolicy
+        bool requireAcknowledgment
+        int maxAckAttempts
+        datetime expiresAt
+    }
+    
+    DeliveryRule ||--|{ Channel : "configures"
+    DeliveryRule ||--|{ Segment : "applies_to"
+    
+    NotificationLog {
+        int id PK
+        int tenant_id FK "not null"
+        int notification_id FK "not null"
+        int channel_id FK "not null"
+        enum status
+        text error
+        bool isAcknowledged
+    }
+    
+    ScheduleRule {
+        int id PK
+        int tenant_id FK "not null"
+        string cronExpression
+        datetime startAt
+        datetime endAt
+        json excludeDates
+        json timezone
+    }
+    
+    Task {
+        int id PK
+    }
+    
+    Document {
+        int id PK
+    }
+    
+    Segment {
+        int id PK
+    }
+    
+    User {
+        int id PK
+    }
+```
 
 * TemplateRendererService: Renders multi-channel content using Twig with dynamic variable support. Implements output sanitization and Redis caching.
 
