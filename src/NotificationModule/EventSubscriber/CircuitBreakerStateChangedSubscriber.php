@@ -23,7 +23,7 @@ namespace App\NotificationModule\EventSubscriber;
 
 use App\NotificationModule\Event\CircuitBreakerStateChangedEvent;
 use App\NotificationModule\Service\NotificationTrackerService;
-use App\SupportModule\Service\SupportTicketServiceInterface;
+use App\SupportModule\Contract\SupportTicketServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -23,30 +23,54 @@ namespace App\MultitenancyModule\Contract;
 
 use App\MultitenancyModule\Entity\Tenant;
 
+/**
+ * Defines operations for managing the tenant context during a request lifecycle.
+ */
 interface TenantContextInterface
 {
     /**
-     * Retrieves the current tenant context.
-     * 
-     * @param string $id The tenant ID to load 
-     * @throws \RuntimeException If no tenant is set
-     * @return Tenant The current tenant context 
+     * Loads the tenant identified by its ID and sets it as the current context.
+     *
+     * @param string $id Tenant ID
+     *
+     * @throws \RuntimeException If the tenant is not found
+     *
+     * @return Tenant Loaded tenant
      */
     public function loadTenant(string $id): Tenant;
 
     /**
-     * Sets the current tenant context.
-     * 
-     * @param Tenant $tenant The tenant to set as current
-     * @throws \RuntimeException If the tenant is invalid or not found
+     * Returns the current tenant.
+     *
+     * @throws \RuntimeException If the context is not initialized
+     *
+     * @return Tenant Current tenant
+     */
+    public function getCurrentTenant(): Tenant;
+
+    /**
+     * Sets the current tenant explicitly.
+     *
+     * @param Tenant $tenant Tenant to set
+     *
+     * @throws \LogicException If the context is already initialized
+     *
      * @return void
      */
     public function setCurrentTenant(Tenant $tenant): void;
-    
-    /** 
+
+    /**
+     * Indicates whether the context has been initialized.
+     *
+     * @return bool True if initialized, false otherwise
+     */
+    public function isInitialized(): bool;
+
+    /**
      * Clears the current tenant context.
-     * 
-     * @throws \RuntimeException If no tenant is currently set
+     *
+     * @throws \RuntimeException If no context is initialized
+     *
      * @return void
      */
     public function clearTenant(): void;

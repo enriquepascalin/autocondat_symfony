@@ -21,51 +21,59 @@ declare(strict_types=1);
 
 namespace App\NotificationModule\Service;
 
-use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use App\Contracts\CircuitBreakerInterface;
 
 /**
- * Circuit Breaker implementation for notification services
+ * Circuit Breaker implementation for outbound notification providers.
+ *
+ * The class relies on a Symfony cache pool implementing {@see CacheInterface}
+ * so that it can atomically read-through on cache misses and obtain
+ * stampede-protection semantics.
  */
 final class NotificationCircuitBreaker implements CircuitBreakerInterface
 {
-    private const OPEN = 'open';
-    private const HALF_OPEN = 'half_open';
-    private const CLOSED = 'closed';
-    
-    private const CACHE_PREFIX = 'circuit_breaker_';
-    private const FAILURE_COUNT_KEY = 'failure_count';
-    private const STATE_KEY = 'state';
-    private const LAST_FAILURE_KEY = 'last_failure';
+    private const OPEN           = 'open';
+    private const HALF_OPEN      = 'half_open';
+    private const CLOSED         = 'closed';
 
+    private const CACHE_PREFIX   = 'circuit_breaker_';
+    private const FAILURE_COUNT  = 'failure_count';
+    private const STATE          = 'state';
+    private const LAST_FAILURE   = 'last_failure';
+
+    /**
+     * @param CacheInterface $cache            Autowired pool (e.g. cache.app ➜ Redis)
+     * @param int            $failureThreshold Consecutive failures before opening the circuit
+     * @param int            $resetTimeout     Seconds to wait before a half-open trial
+     * @param string         $serviceName      Identifier to scope keys per external service
+     */
     public function __construct(
-        private readonly string $serviceName,
-        private readonly int $failureThreshold,
-        private readonly int $resetTimeout,
-        private readonly AdapterInterface $cache
+        private readonly CacheInterface $cache,
+        private readonly int $failureThreshold = 3,
+        private readonly int $resetTimeout = 60,
+        private readonly string $serviceName = 'default',
     ) {}
 
     public function isAvailable(): bool
     {
-        $state = $this->getCurrentState();
-        
+        $state = $this->getState();
         if ($state === self::CLOSED) {
             return true;
         }
-        
+
         if ($state === self::OPEN) {
-            $lastFailure = $this->getLastFailureTime();
-            return (time() - $lastFailure) > $this->resetTimeout;
+            return (time() - $this->getLastFailureTime()) > $this->resetTimeout;
         }
-        
-        // HALF_OPEN state allows one trial
+
+        // HALF-OPEN allows a single trial request
         return true;
     }
 
     public function recordSuccess(): void
     {
-        $this->cache->delete($this->getKey(self::FAILURE_COUNT_KEY));
+        $this->cache->delete($this->key(self::FAILURE_COUNT));
         $this->setState(self::CLOSED);
     }
 
@@ -73,7 +81,7 @@ final class NotificationCircuitBreaker implements CircuitBreakerInterface
     {
         $failures = $this->incrementFailureCount();
         $this->setLastFailureTime(time());
-        
+
         if ($failures >= $this->failureThreshold) {
             $this->setState(self::OPEN);
         }
@@ -81,86 +89,66 @@ final class NotificationCircuitBreaker implements CircuitBreakerInterface
 
     public function getState(): string
     {
-        return $this->getCurrentState();
+        return $this->cache->get($this->key(self::STATE), function (ItemInterface $item) {
+            $item->expiresAfter(0);
+            return self::CLOSED;
+        });
     }
 
     public function getFailureCount(): int
     {
-        return $this->cache->get(
-            $this->getKey(self::FAILURE_COUNT_KEY),
-            function (ItemInterface $item) {
-                $item->expiresAfter($this->resetTimeout);
-                return 0;
-            }
-        );
+        return $this->cache->get($this->key(self::FAILURE_COUNT), function (ItemInterface $item) {
+            $item->expiresAfter($this->resetTimeout);
+            return 0;
+        });
     }
 
     public function reset(): void
     {
-        $this->cache->delete($this->getKey(self::FAILURE_COUNT_KEY));
-        $this->cache->delete($this->getKey(self::STATE_KEY));
-        $this->cache->delete($this->getKey(self::LAST_FAILURE_KEY));
+        $this->cache->delete($this->key(self::FAILURE_COUNT));
+        $this->cache->delete($this->key(self::STATE));
+        $this->cache->delete($this->key(self::LAST_FAILURE));
     }
 
-    private function getCurrentState(): string
-    {
-        return $this->cache->get(
-            $this->getKey(self::STATE_KEY),
-            function (ItemInterface $item) {
-                $item->expiresAfter(0);
-                return self::CLOSED;
-            }
-        );
-    }
+    /* ---------- Private helpers ------------------------------------------------ */
 
     private function setState(string $state): void
     {
-        $this->cache->get(
-            $this->getKey(self::STATE_KEY),
-            function (ItemInterface $item) use ($state) {
-                $item->expiresAfter($this->resetTimeout);
-                return $state;
-            }
-        );
+        $this->cache->get($this->key(self::STATE), function (ItemInterface $item) use ($state) {
+            $item->expiresAfter($this->resetTimeout);
+            return $state;
+        });
     }
 
     private function getLastFailureTime(): int
     {
-        return $this->cache->get(
-            $this->getKey(self::LAST_FAILURE_KEY),
-            function (ItemInterface $item) {
-                $item->expiresAfter($this->resetTimeout * 2);
-                return 0;
-            }
-        );
+        return $this->cache->get($this->key(self::LAST_FAILURE), function (ItemInterface $item) {
+            $item->expiresAfter($this->resetTimeout * 2);
+            return 0;
+        });
     }
 
     private function setLastFailureTime(int $timestamp): void
     {
-        $this->cache->get(
-            $this->getKey(self::LAST_FAILURE_KEY),
-            function (ItemInterface $item) use ($timestamp) {
-                $item->expiresAfter($this->resetTimeout * 2);
-                return $timestamp;
-            }
-        );
+        $this->cache->get($this->key(self::LAST_FAILURE), function (ItemInterface $item) use ($timestamp) {
+            $item->expiresAfter($this->resetTimeout * 2);
+            return $timestamp;
+        });
     }
 
     private function incrementFailureCount(): int
     {
         $count = $this->getFailureCount() + 1;
-        $this->cache->get(
-            $this->getKey(self::FAILURE_COUNT_KEY),
-            function (ItemInterface $item) use ($count) {
-                $item->expiresAfter($this->resetTimeout);
-                return $count;
-            }
-        );
+        $this->cache->get($this->key(self::FAILURE_COUNT), function (ItemInterface $item) use ($count) {
+            $item->expiresAfter($this->resetTimeout);
+            return $count;
+        });
+
         return $count;
     }
 
-    private function getKey(string $type): string
+    private function key(string $suffix): string
     {
-        return self::CACHE_PREFIX . $this->serviceName . '_' . $type;
+        return self::CACHE_PREFIX.$this->serviceName.'_'.$suffix;
     }
 }

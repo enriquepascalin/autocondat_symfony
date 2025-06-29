@@ -21,78 +21,119 @@ declare(strict_types=1);
 
 namespace App\MultitenancyModule\Service;
 
+use App\MultitenancyModule\Contract\TenantContextInterface;
 use App\MultitenancyModule\Entity\Tenant;
+use App\MultitenancyModule\Repository\TenantRepository;
+use RuntimeException;
+use LogicException;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class TenantContext
+/**
+ * Default implementation of TenantContextInterface.
+ * Manages the current tenant, initializing it from the authenticated user or by explicit setters.
+ */
+final class TenantContext implements TenantContextInterface
 {
     /**
      * Current tenant instance.
      */
     private ?Tenant $tenant = null;
 
-
     /**
-     * Flag indicating if tenant has been initialized.
+     * Flag indicating whether the context has been initialized.
      */
     private bool $initialized = false;
 
-    /**
-     * Constructor.
-     *
-     * @param Security $security Symfony security service
-     */
     public function __construct(
         private readonly Security $security,
+        private readonly TenantRepository $tenantRepository
     ) {
-        $this->initializeTenant();
+        $this->initializeFromSecurity();
     }
 
     /**
-     * Initialize tenant from authenticated user.
+     * {@inheritDoc}
      */
-    private function initializeTenant(): void
+    public function loadTenant(string $id): Tenant
     {
-        $user = $this->security->getUser();
-        if ($user && method_exists($user, 'getTenant')) {
-            $this->tenant = $user->getTenant();
-            $this->initialized = true;
+        if ($this->tenant !== null && $this->tenant->getId() === $id) {
+            return $this->tenant;
         }
+
+        $tenant = $this->tenantRepository->find($id);
+
+        if (!$tenant instanceof Tenant) {
+            throw new RuntimeException(sprintf('Tenant "%s" not found.', $id));
+        }
+
+        $this->tenant      = $tenant;
+        $this->initialized = true;
+
+        return $tenant;
     }
 
     /**
-     * Get current tenant.
-     *
-     * @return Tenant|null Current tenant or null if not available
+     * {@inheritDoc}
      */
-    public function getCurrentTenant(): ?Tenant
+    public function getCurrentTenant(): Tenant
     {
+        if (!$this->initialized || $this->tenant === null) {
+            throw new RuntimeException('Tenant context not initialized.');
+        }
+
         return $this->tenant;
     }
 
     /**
-     * Set current tenant.
-     *
-     * @param Tenant $tenant Tenant instance to set
-     *
-     * @throws \LogicException If tenant already initialized
+     * {@inheritDoc}
      */
-    public function setCurrentTenant(?Tenant $tenant): void
+    public function setCurrentTenant(Tenant $tenant): void
     {
         if ($this->initialized) {
-            throw new \LogicException('Tenant already initialized from security context');
+            throw new LogicException('Tenant context already initialized.');
         }
-        $this->tenant = $tenant;
+
+        $this->tenant      = $tenant;
         $this->initialized = true;
     }
 
     /**
-     * Check if tenant context has been initialized.
-     *
-     * @return bool True if initialized, false otherwise
+     * {@inheritDoc}
      */
     public function isInitialized(): bool
     {
         return $this->initialized;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clearTenant(): void
+    {
+        if (!$this->initialized) {
+            throw new RuntimeException('Tenant context not initialized.');
+        }
+
+        $this->tenant      = null;
+        $this->initialized = false;
+    }
+
+    /**
+     * Initializes the tenant context from the authenticated user if possible.
+     *
+     * @return void
+     */
+    private function initializeFromSecurity(): void
+    {
+        $user = $this->security->getUser();
+
+        if ($user !== null && method_exists($user, 'getTenant')) {
+            $tenant = $user->getTenant();
+
+            if ($tenant instanceof Tenant) {
+                $this->tenant      = $tenant;
+                $this->initialized = true;
+            }
+        }
     }
 }

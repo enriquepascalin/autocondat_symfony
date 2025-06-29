@@ -110,3 +110,5 @@ services:
             $logger: '@monolog.logger.notification'
             $scheduler: '@App\NotificationModule\Service\ScheduledRuleService'
             $tenantRateLimiterFactory: '@rate_limiter.tenant_notifications'
+
+    App\SupportModule\Contract\SupportTicketServiceInterface: '@App\SupportModule\Service\SupportTicketService'
