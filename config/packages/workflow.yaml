@@ -43,3 +43,27 @@ framework:
                 archive:
                     from: [delivered, failed, acknowledged, opened]
                     to: archived
+
+        circuit_breaker:
+            type: 'state_machine'
+            marking_store:
+                service: App\WorkflowModule\Store\CacheCircuitBreakerStore
+            audit_trail:
+                enabled: true
+            initial_marking: closed
+            supports:
+                - App\Contracts\CircuitBreakerInterface
+            places:
+                - closed
+                - open
+                - half_open
+            transitions:
+                trip:
+                    from: closed
+                    to:   open
+                probe:
+                    from: open
+                    to:   half_open
+                reset:
+                    from: [half_open, open]
+                    to:   closed

@@ -85,6 +85,9 @@ services:
     Symfony\Component\Workflow\WorkflowInterface $notificationWorkflow: 
         '@workflow.notification'
 
+    Symfony\Component\Workflow\WorkflowInterface $stateMachine: 
+        '@state_machine.circuit_breaker' 
+
     App\AuditTrailModule\:
         resource: '../src/AuditTrailModule/'
 
@@ -112,3 +115,7 @@ services:
             $tenantRateLimiterFactory: '@rate_limiter.tenant_notifications'
 
     App\SupportModule\Contract\SupportTicketServiceInterface: '@App\SupportModule\Service\SupportTicketService'
+
+    App\WorkflowModule\Store\CacheCircuitBreakerStore:
+        arguments:
+            $cache: '@cache.app'

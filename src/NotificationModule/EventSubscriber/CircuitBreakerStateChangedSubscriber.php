@@ -21,17 +21,19 @@ declare(strict_types=1);
 
 namespace App\NotificationModule\EventSubscriber;
 
-use App\NotificationModule\Event\CircuitBreakerStateChangedEvent;
+use App\Contracts\CircuitBreakerInterface;
 use App\NotificationModule\Service\NotificationTrackerService;
 use App\SupportModule\Contract\SupportTicketServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Workflow\Event\Event as WorkflowEvent;
 
 /**
- * Handles circuit breaker state change events for notification channels.
+ * Handles circuit breaker state transitions emitted by the Symfony state-machine.
  *
- * This subscriber logs state transitions, creates support tickets for critical state changes,
- * and updates tracking metrics for channel health monitoring.
+ * The subscriber listens to the generic `workflow.circuit_breaker.transition` event,
+ * logs the transition, updates tracking metrics and optionally opens a support ticket
+ * when the breaker trips to the OPEN state.
  */
 final class CircuitBreakerStateChangedSubscriber implements EventSubscriberInterface
 {
@@ -43,56 +45,56 @@ final class CircuitBreakerStateChangedSubscriber implements EventSubscriberInter
     }
 
     /**
-     * Defines the events this subscriber listens to.
+     * {@inheritdoc}
      *
-     * @return array<string, string> The event names to listen to and their corresponding methods
+     * @return array<string, string>
      */
     public static function getSubscribedEvents(): array
     {
+        // One hook for all transitions in the `circuit_breaker` state-machine
         return [
-            CircuitBreakerStateChangedEvent::class => 'onCircuitBreakerStateChange',
+            'workflow.circuit_breaker.transition' => 'onCircuitBreakerTransition',
         ];
     }
 
     /**
-     * Processes circuit breaker state change events.
+     * Processes every state transition of the circuit breaker.
      *
-     * @param CircuitBreakerStateChangedEvent $event The circuit breaker state change event
-     *
-     * @throws \Psr\Log\LogLevel
+     * @param WorkflowEvent $event Workflow transition event produced by the state-machine
      */
-    public function onCircuitBreakerStateChange(CircuitBreakerStateChangedEvent $event): void
+    public function onCircuitBreakerTransition(WorkflowEvent $event): void
     {
-        $channel = $event->getChannel();
-        $previousState = $event->getPreviousState();
-        $newState = $event->getNewState();
-        $tenant = $event->getTenant();
+        /** @var CircuitBreakerInterface $cb */
+        $cb            = $event->getSubject();
+        $transition    = $event->getTransition();
+        $previousState = implode(', ', array_keys($event->getMarking()->getPlaces()));
+        $newState      = implode(', ', $transition->getTos());
 
         // Log state transition
         $this->logger->warning(
-            'Circuit breaker state changed for {channel} channel', 
+            'Circuit breaker state changed for {channel} channel',
             [
-                'channel' => $channel->value,
+                'channel'  => $cb->getChannel()->value,
                 'previous' => $previousState,
-                'new' => $newState,
-                'tenant' => $tenant->getId(),
+                'new'      => $newState,
+                'tenant'   => $cb->getTenant()->getId(),
             ]
         );
 
         // Update tracking metrics
         $this->trackerService->recordCircuitBreakerChange(
-            $channel,
+            $cb->getChannel(),
             $previousState,
             $newState,
-            $tenant
+            $cb->getTenant()
         );
 
         // Create support ticket for critical state changes
         if ($newState === 'open') {
-            $this->supportService->createCircuitBreakerTicket( 
-                $channel,
-                $tenant,
-                "Circuit breaker tripped for {$channel->value} channel"
+            $this->supportService->createCircuitBreakerTicket(
+                $cb->getChannel(),
+                $cb->getTenant(),
+                "Circuit breaker tripped for {$cb->getChannel()->value} channel"
             );
         }
     }

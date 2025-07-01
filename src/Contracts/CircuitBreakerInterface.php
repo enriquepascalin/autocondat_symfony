@@ -50,14 +50,26 @@ interface CircuitBreakerInterface
     public function getState(): string;
 
     /**
-     * Gets the number of consecutive failures recorded.
-     * This can be used to determine if the circuit breaker should open.
+     * Sets the current state.
      */
-    public function getFailureCount(): int;
+    public function setState(string $state): void;
 
     /**
      * Resets the circuit breaker state and failure count.
      * This is typically called after a cooldown period or when the system is ready to retry operations.
      */
     public function reset(): void;
+
+    /**
+     * Gets the number of consecutive failures recorded.
+     * This can be used to determine if the circuit breaker should open.
+     */
+    public function getFailureCount(): int;
+
+    /**
+     * Gets the name of the service this circuit breaker is associated with.
+     * This is used to scope the circuit breaker to a specific service or operation.
+     */
+    public function getServiceName(): string;
+
 }
